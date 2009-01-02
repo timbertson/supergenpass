@@ -35,8 +35,6 @@ def get_password(ask = False):
 
 	if password is None:
 		password = _ask_password()
-		print "saving password..."
-		_store().save_password(password)
 	return password
 	
 def save_clipboard(data):
@@ -133,9 +131,3 @@ class PasswordStore():
 			account = self.account
 		_, password = self.keychain.getgenericpassword(self.chain, account, self.service)
 		return password
-	
-	def save_password(self, password, account = None):
-		if account is None:
-			account = self.account
-		self.keychain.setgenericpassword(self.chain, account, password, self.service)
-
