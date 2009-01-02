@@ -278,7 +278,7 @@ import getopt
 import getpass
 
 if sys.platform == 'darwin':
-	import osx as util
+	import lib.osx.main as util
 else:
 	util = None
 

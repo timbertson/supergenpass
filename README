@@ -1,4 +1,5 @@
 Original code / ideas:
 
 supergenpass: http://supergenpass.com/
-keychain: https://launchpad.net/keychain.py/
+keychain (osx): https://launchpad.net/keychain.py/
+keyring (gnome): http://www.rittau.org/blog/20070726-01
