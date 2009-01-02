@@ -31,6 +31,7 @@ def get_password(ask = False):
 			password = _store().password()
 		except KeychainError:
 			print "Couldn't get keychain password"
+			raise
 
 	if password is None:
 		password = _ask_password()

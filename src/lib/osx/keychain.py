@@ -112,6 +112,7 @@ class Keychain:
 
 	def getgenericpassword(self, keychain, account, service):
 		""" Returns account + password pair from specified keychain item """
+		print "security find-generic-password -g -a %s -s %s %s" % quote_all(account, service, keychain)
 		keychain = self.checkkeychainname(keychain)
 
 		data = self.shell(
