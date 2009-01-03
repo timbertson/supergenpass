@@ -3,3 +3,5 @@ Original code / ideas:
 supergenpass: http://supergenpass.com/
 keychain (osx): https://launchpad.net/keychain.py/
 keyring (gnome): http://www.rittau.org/blog/20070726-01
+
+requires: mocktest (`easy_install mocktest`)

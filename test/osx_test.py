@@ -1,5 +1,4 @@
 import helper
-import eggs
 from mocktest import mock_on, mock_wrapper, TestCase, pending, ignore
 
 # tested stuff
@@ -21,3 +20,7 @@ class OsxTest(TestCase):
 	def test_should_ask_for_password_if_getting_fails(self):
 		pass
 
+	def test_should_save_clipboard_data(self):
+		osx.save_clipboard('some string')
+		self.assertEqual(commands.getstatusoutput('pbpaste'),(0,'some string'))
+	

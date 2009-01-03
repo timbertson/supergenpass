@@ -97,6 +97,23 @@ def guess_url():
 			return None
 		# print output
 		return output
+
+def main():
+	from ..supergenpass import sgp
+	from .. import ui, domain
+	url = guess_url()
+	if url is None:
+		url = ui.get_input('Enter domain / URL: ')
+	try:
+		pass_ = get_password(False)
+	except KeychainError:
+		pass_ = ui.get_input('Enter master password: ')
+	
+	domain_ = domain.domain_for_url(url)
+	generated_pass, domain_ = sgp(pass_, domain_, 8)
+	
+	save_clipboard(generated_pass)
+	notify(domain_)
 	
 
 # implementation details for keychain access
@@ -113,8 +130,13 @@ def _ask_password():
 	password = getpass("Enter master password: ")
 	return password
 
+from .. import keyinfo
 class PasswordStore():
-	def __init__(self, chain='login', account='master', service='supergenpass.com'):
+	def __init__(self, chain='login', account=None, service=None):
+		if account is None:
+			account = keyinfo.account
+		if service is None:
+			service = keyinfo.realm
 		self.chain = chain
 		self.account = account
 		self.service = service
