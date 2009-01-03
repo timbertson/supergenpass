@@ -192,16 +192,12 @@ def str2binl(str):
 
 def sgp(passwd, domain, length=None):
 	"""
-	Given a master password and URL, generates a custom password just for that
+	Given a master password and domain, generates a custom password just for that
 	site. The original password cannot be obtained from the generated
 	password.
 
-	Implements the SuperGenPass password hashing algorithm. Strips out all but
-	the domain (including subdomains) from the URL, and then MD5-hashes
-	"passwd:domain". Then it does some special munging (see the code).
-
 	passwd: str. The "master password".
-	url: str. The URL or domain name of the site to generate a hash for.
+	domain: str. The domain name of the site to generate a hash for.
 	length: int. Length of the generated password hash. Must be between 4 and
 		24 inclusive. Defaults to 10.
 	"""
@@ -217,7 +213,7 @@ def sgp(passwd, domain, length=None):
 	if len(passwd) == 0:
 		raise ValueError("sgp: passwd must not be empty")
 	if len(domain) == 0:
-		raise ValueError("sgp: url must not be empty")
+		raise ValueError("sgp: domain must not be empty")
 	if not 4 <= length <= 24:
 		raise ValueError("sgp: length must be between 4 and 24 inclusive")
 
@@ -245,81 +241,46 @@ def sgp(passwd, domain, length=None):
 	while not valid_password(pass_cand[:length]):
 		pass_cand = b64_md5(pass_cand)
 
-	return (pass_cand[:length], domain)
-
+	return pass_cand[:length]
 
 ### COMMAND-LINE SPECIFIC CODE ###
 
-import os
 import sys
 import getopt
 import getpass
 
 from lib.domain import domain_for_url
-
-if sys.platform == 'darwin':
-	import lib.osx as util
-else:
-	util = None
-
 def usage(progname):
 	print "SuperGenPass"
 	print "Prompts for a master password and domain name."
 	print "Generates a custom password for that domain."
 	print
 	print "Usage: %s [OPTIONS] [URL]" % progname
-	print "    URL          The URL/domain name to make a password for"
-	print "                 (Will prompt if not supplied)"
-	print "    OPTIONS"
-	print "        -l,      Generated password length"
-	print "          --length"
-	print "        -c,      Copy to clipboard instead of printing password (mac only)"
-	print "          --clipboard"
-	print "        -k,      Use keychain to store the master password"
-	print "          --keychain"
-	print "        -f,      Force a new password"
-	print "          --force"
-	print "        -g,      Guess the URL (fom the current browser window"
-	print "          --guess-url"
-	print "        -n,      Notify (growl) upon completion"
-	print "          --notify"
-	print "        --help   This help"
+	print "	   URL			The URL/domain name to make a password for"
+	print "					(Will prompt if not supplied)"
+	print "	   OPTIONS"
+	print "		   -l		Generated password length"
+	print "		   --help	This help"
 
 def main(argv=None):
 	if argv is None:
 		argv = sys.argv
 	if len(argv) == 0:
-		argv = [__file__]
+		argv = ["supergenpass.py"]
 
 	try:
-		opts, args = getopt.getopt(argv[1:], "l:ckfgn", ["help", "clipboard","keychain","length=","force","guess-url","notify"])
+		opts, args = getopt.getopt(argv[1:], "l:", ["help"])
 	except getopt.error, msg:
 		 usage(argv[0])
 		 return 1
 
 	# process options
 	length = None
-	clipboard_mode = False
-	keychain_mode = False
-	force_mode = False
-	guess_url_mode = False
-	notify_mode = False
-	log_domain_mode = False
 	for o, a in opts:
 		if o == "--help":
 			usage(argv[0])
 			return 1
-		elif o == "-c" or o == "--clipboard":
-			clipboard_mode = True
-		elif o == "-k" or o == "--keychain":
-			keychain_mode = True
-		elif o == "-f" or o == "--force":
-			force_mode = True
-		elif o == "-g" or o == "--guess-url":
-			guess_url_mode = True
-		elif o == "-n" or o == "--notify":
-			notify_mode = True
-		elif o == "-l" or o == "--length":
+		elif o == "-l":
 			try:
 				length = int(a)
 			except ValueError:
@@ -331,12 +292,8 @@ def main(argv=None):
 		print "length must be between 4 and 24 inclusive"
 		return 1
 
-	# get additional info
 	try:
-		if keychain_mode:
-			passwd = util.get_password(force_mode)
-		else:
-			passwd = getpass.getpass("Enter master password: ")
+		passwd = getpass.getpass("Enter master password: ")
 	except (EOFError, KeyboardInterrupt):
 		print
 		return 2
@@ -344,16 +301,12 @@ def main(argv=None):
 		return 2
 
 	if len(args) == 0:
-		url = None
-		if guess_url_mode:
-			url = util.guess_url()
-		if url is None:
-			# Prompt for the domain
-			try:
-				url = raw_input("Enter URL/domain: ")
-			except (EOFError, KeyboardInterrupt):
-				print
-				return 2
+		# Prompt for the domain
+		try:
+			url = raw_input("Enter URL/domain: ")
+		except (EOFError, KeyboardInterrupt):
+			print
+			return 2
 	else:
 		url = args[0]
 	if len(url) == 0:
@@ -368,16 +321,11 @@ def main(argv=None):
 	except UnicodeDecodeError:
 		print "Input was not in UTF-8"
 		return 1
-	
+
 	domain = domain_for_url(url)
-	password, domain = sgp(passwd, domain, length)
+	password = sgp(passwd, domain, length)
 	print "Domain: '%s'" % domain
-	if clipboard_mode:
-		util.save_clipboard(password)
-	else:
-		print "password: %s" % password
-	if notify_mode:
-		util.notify(domain)
+	print "password: %s" % password
 
 if __name__ == "__main__":
 	sys.exit(main())

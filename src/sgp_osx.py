@@ -29,7 +29,7 @@ def main():
 				pass_ = ui.get_password('Enter master password: ')
 	
 			domain_ = domain.domain_for_url(url)
-			generated_pass, domain_ = sgp(pass_, domain_, opts.length)
+			generated_pass = sgp(pass_, domain_, opts.length)
 	
 			osx.save_clipboard(generated_pass)
 			osx.notify(domain_)
