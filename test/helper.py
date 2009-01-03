@@ -2,7 +2,7 @@
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-# make mocktest available
+# make system eggs available
 import eggloader
-eggloader.load('mocktest')
+
 

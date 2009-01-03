@@ -3,7 +3,7 @@ from mocktest import mock_on, mock_wrapper, TestCase, pending, ignore
 
 # tested stuff
 import commands
-import lib.osx.main as osx
+import lib.osx as osx
 
 class OsxTest(TestCase):
 	def test_should_get_password(self):

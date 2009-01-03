@@ -101,20 +101,32 @@ def guess_url():
 def main():
 	from ..supergenpass import sgp
 	from .. import ui, domain
-	url = guess_url()
-	if url is None:
-		url = ui.get_input('Enter domain / URL: ')
-	try:
-		pass_ = get_password(False)
-	except KeychainError:
-		pass_ = ui.get_input('Enter master password: ')
+	import eggloader
+	from mandy import Mandy
+	class Main(Mandy):
+		def configure(self):
+			self.opt('length',int, long='length', short='l', default=10)
+			self.arg('url', default = None)
+		
+		def run(self):
+			opts = self.opts
+			url = opts.url
+			if url is None:
+				url = guess_url()
+			if url is None:
+				url = ui.get_input('Enter domain / URL: ')
+			try:
+				pass_ = get_password(False)
+			except KeychainError:
+				pass_ = ui.get_input('Enter master password: ')
 	
-	domain_ = domain.domain_for_url(url)
-	generated_pass, domain_ = sgp(pass_, domain_, 8)
+			domain_ = domain.domain_for_url(url)
+			generated_pass, domain_ = sgp(pass_, domain_, opts.length)
 	
-	save_clipboard(generated_pass)
-	notify(domain_)
-	
+			save_clipboard(generated_pass)
+			notify(domain_)
+
+	Main()
 
 # implementation details for keychain access
 
