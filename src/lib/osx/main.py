@@ -2,6 +2,7 @@
 import os
 from commands import getstatusoutput
 from keychain import Keychain, KeychainError
+from .. import keyinfo
 
 __all__ = ['get_password','save_clipboard','notify','guess_url']
 
@@ -26,6 +27,12 @@ def save_clipboard(data):
 	if status is not None:
 		raise RuntimeError, "Could not save data to clipboard"
 	print "  (password saved to the clipboard)"
+
+def save_password(p):
+	"""
+	save password to keychain
+	"""
+	_store().save_password(p)
 
 def notify(domain):
 	"""
@@ -90,7 +97,7 @@ def _ask_password():
 	password = getpass("Enter master password: ")
 	return password
 
-from .. import keyinfo
+
 class PasswordStore():
 	def __init__(self, chain='login', account=None, service=None):
 		if account is None:
@@ -113,3 +120,8 @@ class PasswordStore():
 			account = self.account
 		_, password = self.keychain.getgenericpassword(self.chain, account, self.service)
 		return password
+
+	def save_password(self, password, account = None):
+		if account is None:
+			account = keyinfo.account
+		self.keychain.setgenericpassword(self.chain, account, password, self.service)
