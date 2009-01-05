@@ -1,4 +1,5 @@
-import commands, os
+import os
+from commands import getstatusoutput
 from ..command import require_command
 from .. import keyinfo
 import keyring
@@ -20,7 +21,7 @@ def notify(domain):
 	Send a system notification that the password has been generated
 	"""
 	require_command('mumbles-send', url='http://www.mumbles-project.org/download/')
-	st, output = getstatusoutput("mumbles-send -m '%s - password generated' -t 'SuperGenPass'" % domain)
+	st, output = getstatusoutput("mumbles-send 'SuperGenPass' '%s - password generated'" % domain)
 	if st:
 		raise RuntimeError, output
 
@@ -40,16 +41,22 @@ def guess_url():
 
 
 def get_password():
-	return _store().get_credentials()[1]
+	try:
+		return _store().get_credentials()[1]
+	except keyring.gkey.NoMatchError:
+		raise RuntimeError("no password found")
 	
 def save_password(p):
-	_store.set_credentials((keyinfo.account, p))
+	try:
+		_store().set_credentials((keyinfo.account, p))
+	except keyring.gkey.NoMatchError, e:
+		raise RuntimeError("couldn't set password: %s" % (e))
+
 
 _key_store = None
 def _store():
 	global _key_store
 	if _key_store is None:
-		from keyring import Keyring
-		_key_store = Keyring(keyinfo.account, keyinfo.realm, protocol)
+		_key_store = keyring.Keyring(keyinfo.account, keyinfo.realm, keyinfo.protocol)
 	return _key_store
 	

@@ -42,7 +42,7 @@ class Main(Command):
 
 		url = opts.url
 		if not url:
-			self.do(guess_url)
+			url = self.do(guess_url)
 		if not url:
 			url = ui.get_input('Enter domain / URL: ')
 		
@@ -58,8 +58,8 @@ class Main(Command):
 			try:
 				done = self.do(save_pass, pass_)
 				if done is False:
-					raise StandardError, "not supported by os integration module"
-			except StandardError, e:
+					raise RuntimeError, "not supported by os integration module"
+			except RuntimeError, e:
 				print "Couldn't save password to os store: %s" % (e,)
 				raise
 		
@@ -79,10 +79,10 @@ def require_command(name, package=None, url=None):
 	if not has_command(name):
 		help_str = ""
 		if package is not None:
-			"Try running: apt-get install %s" % (package,)
+			help_str = "Try running: apt-get install %s" % (package,)
 		elif url is not None:
-			"To install it, see: %s" % (url)
-		raise CommandNotInstalledError(name, help=help_str)
+			help_str = "To install it, see: %s" % (url)
+		raise CommandNotInstalledError(name, help_str)
 
 class CommandNotInstalledError(OSError):
 	def __init__(self, name, help):
