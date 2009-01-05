@@ -7,6 +7,7 @@ from mandy import Command
 
 # local
 import ui, domain
+from supergenpass import sgp
 
 get_pass = 'get_password'
 guess_url = 'guess_url'
@@ -30,27 +31,27 @@ class Main(Command):
 	
 	def configure(self):
 		self.opt('length', int, short='l', default=10, desc="length of generated password")
-		self.opt('force', bool, default=False, desc="Ask for the password, skipping system store (default is --no-force)")
+		self.opt('ask', bool, default=False, desc="Ask for the password, skipping system store (default is --no-ask)")
 		self.opt('save', bool, default=False, desc="Save password (in system store, default is --no-save")
 		self.opt('notify', bool, default=True, desc="Notify on completion (default is --notify)")
 		self.arg('url', default = None, desc="url / domain you will use the password for")
 
 	def run(self, opts):
 		if opts.save:
-			opts.force = True
+			opts.ask = True
 
 		url = opts.url
-		if url is None:
+		if not url:
 			self.do(guess_url)
-		if url is None:
+		if not url:
 			url = ui.get_input('Enter domain / URL: ')
 		
 		pass_ = None
-		if not opts.force:
+		if not opts.ask:
 			try:
 				pass_ = self.do(get_pass)
-			except KeychainError: pass
-		if pass_ is None:
+			except RuntimeError: pass
+		if not pass_:
 			pass_ = ui.get_password('Enter master password: ')
 
 		if opts.save:
@@ -84,7 +85,10 @@ def require_command(name, package=None, url=None):
 		raise CommandNotInstalledError(name, help=help_str)
 
 class CommandNotInstalledError(OSError):
-	def __init__(self, name, help_str):
+	def __init__(self, name, help):
 		self.name = name
-		self.help_str = help_str
-		self.message = "Required command `%s` is not available. %s" % (name, help_str)
+		self.help = help
+		self.message = "Required command `%s` is not available. %s" % (name, help)
+	
+	def __str__(self):
+		return self.message
