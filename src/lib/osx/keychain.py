@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# https://launchpad.net/keychain.py/
 # -*- coding: utf-8 -*-
 
 # Created by Stuart Colville on 2008-02-02

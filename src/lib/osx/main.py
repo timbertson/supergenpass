@@ -3,6 +3,7 @@ import os
 from commands import getstatusoutput
 from keychain import Keychain, KeychainError
 from .. import keyinfo
+from ..command import require_command
 
 __all__ = ['get_password','save_clipboard','notify','guess_url']
 
@@ -38,6 +39,7 @@ def notify(domain):
 	"""
 	Send a system notification that the password has been generated
 	"""
+	require_command('growlnotify', url='http://growl.info/documentation/growlnotify.php')
 	st, output = getstatusoutput("growlnotify -m '%s - password generated' -t 'SuperGenPass'" % domain)
 	if st:
 		raise RuntimeError, output
