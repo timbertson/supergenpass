@@ -1,6 +1,8 @@
 #!/usr/bin/env python
-
-#TODO: detect kde / gnome. And figure out what to do when confronted with KDE ;)
+from lib import gnome, command
 
 def main():
-	print "TODO..."
+	command.Main(gnome)
+
+if __name__ == '__main__':
+	main()
