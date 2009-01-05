@@ -25,4 +25,11 @@ setup(
 		'setuptools',
 		'eggloader',
 	],
+
+	entry_points = {
+		'console_scripts': [
+			'supergenpass = supergenpass.sgp.auto_main',
+		],
+	}
+
 )

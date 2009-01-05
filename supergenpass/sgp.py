@@ -6,13 +6,15 @@ otherwise, falls back to the bare-bones supergenpass.py implementation
 
 import sys
 
-platform = sys.platform
-if platform == 'darwin':
-	from sgp_osx import main
-elif platform.startswith('linux'):
-	from sgp_linux import main
-else:
-	from supergenpass import main
+def auto_main():
+	platform = sys.platform
+	if platform == 'darwin':
+		from sgp_osx import main
+	elif platform.startswith('linux'):
+		from sgp_linux import main
+	else:
+		from supergenpass import main
+	main()
 
 if __name__ == '__main__':
-	main()
+	auto_main()
