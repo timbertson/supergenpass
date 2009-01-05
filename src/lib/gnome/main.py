@@ -1,5 +1,6 @@
 import commands, os
 from ..command import require_command
+from .. import keyinfo
 from firefox import guess_url
 
 def save_clipboard(data):
@@ -23,3 +24,17 @@ def notify(domain):
 	if st:
 		raise RuntimeError, output
 
+def get_password():
+	return _store().get_credentials()[1]
+	
+def save_password(p):
+	_store.set_credentials((keyinfo.account, p))
+
+_key_store = None
+def _store():
+	global _key_store
+	if _key_store is None:
+		from keyring import Keyring
+		_key_store = Keyring(keyinfo.account, keyinfo.realm, protocol)
+	return _key_store
+	
