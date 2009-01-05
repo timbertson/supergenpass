@@ -1,3 +1,4 @@
+# http://www.rittau.org/blog/20070726-01
 __version__ = "$Revision: 14294 $"
 
 import gtk # ensure that the application name is correctly set
