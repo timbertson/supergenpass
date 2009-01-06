@@ -1,3 +1,7 @@
 *.pyc
 .bzr*
+build
+dist
+*.egg-info
+*.tmproj
 

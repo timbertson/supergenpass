@@ -1,9 +1,22 @@
+OS X integration:
+
+	- works with firefox or safari to get the current URL
+	  if you don't specify one
+
+	- uses the OSX keychain service to get/save your master
+	  password
+
+Linux integration: (gnome only, currently)
+
+	- works with firefox to get the current URL if you don't
+	  specify one (requires the "mozRepl" firefox extension
+	  to be installed and running)
+	
+	- uses the gnomekeyring service to get/save your master
+	  password
+
 Original code / ideas:
 
 supergenpass: http://supergenpass.com/
 keychain (osx): https://launchpad.net/keychain.py/
 keyring (gnome): http://www.rittau.org/blog/20070726-01
-
-requires:
-	mocktest (`easy_install mocktest`)
-	eggloader (`easy_install eggloader`)

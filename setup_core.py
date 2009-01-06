@@ -3,19 +3,19 @@
 from setuptools import *
 import commonsetup
 
-name='supergenpass'
-
+name='supergenpass-core'
 setup(
 	name=name,
 	version='0.1.2',
 	description='python implementation of the supergenpass.com password generation algorithm',
 	author=commonsetup.author,
 	author_email=commonsetup.author_email,
-	packages=commonsetup.main_packages,
+	packages=commonsetup.core_packages,
 	
 	long_description="""\
-	supergenpass.com implemented in python - with convenient OS integration hooks
-	into standard password stores and browsers.
+	supergenpass.com implemented as a python library
+	see the package 'supergenpass' for an executable version with
+	OS integration
 	""",
 	classifiers=[
 		"Programming Language :: Python",
@@ -25,15 +25,6 @@ setup(
 	license='GPL',
 	install_requires=[
 		'setuptools',
-		'eggloader',
-		'mandy',
-		'supergenpass-core',
 	],
-
-	entry_points = {
-		'console_scripts': [
-			'supergenpass = supergenpass.sgp.auto_main',
-		],
-	}
 
 )
