@@ -2,12 +2,11 @@
 import commands
 
 # library
-import eggs
 from mandy import Command
+from sgpcore import domain, sgp
 
 # local
-import ui, domain
-from supergenpass import sgp
+import ui
 
 get_pass = 'get_password'
 guess_url = 'guess_url'
