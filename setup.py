@@ -25,14 +25,13 @@ setup(
 	license='GPL',
 	install_requires=[
 		'setuptools',
-		'eggloader',
 		'mandy',
 		'supergenpass-core',
 	],
 
 	entry_points = {
 		'console_scripts': [
-			'supergenpass = supergenpass.sgp.auto_main',
+			'supergenpass = supergenpass:main',
 		],
 	},
 	

@@ -1,8 +1,7 @@
 # make ../src available
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..','sgpcore'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..','supergenpass'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-# make system eggs available
 import eggloader
-
-
