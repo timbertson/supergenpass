@@ -26,5 +26,6 @@ setup(
 	install_requires=[
 		'setuptools',
 	],
+	zip_safe=True,
 
 )

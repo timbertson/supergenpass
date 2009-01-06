@@ -34,6 +34,8 @@ setup(
 		'console_scripts': [
 			'supergenpass = supergenpass.sgp.auto_main',
 		],
-	}
+	},
+	
+	zip_safe=True,
 
 )

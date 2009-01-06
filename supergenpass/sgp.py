@@ -6,10 +6,13 @@ otherwise, falls back to the bare-bones supergenpass.py implementation
 
 import sys
 
-platform = sys.platform
-if platform == 'darwin':
+_platform = sys.platform
+if _platform == 'darwin':
+	from lib import osx as platform
 	from sgp_osx import main
-elif platform.startswith('linux'):
+
+elif _platform.startswith('linux'):
+	from lib import gnome as platform
 	from sgp_linux import main
 else:
 	from sgpcore import main

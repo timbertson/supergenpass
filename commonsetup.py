@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-#TODO: figure out why both packages are being included in both eggs
-
 import setuptools
 core_packages = setuptools.find_packages(exclude=('test','supergenpass*'))
 main_packages = setuptools.find_packages(exclude=('test','sgpcore*'))

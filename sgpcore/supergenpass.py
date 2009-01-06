@@ -249,7 +249,7 @@ import sys
 import getopt
 import getpass
 
-from lib.domain import domain_for_url
+from domain import domain_for_url
 def usage(progname):
 	print "SuperGenPass"
 	print "Prompts for a master password and domain name."
