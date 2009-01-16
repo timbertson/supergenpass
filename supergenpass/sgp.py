@@ -5,6 +5,11 @@ otherwise, falls back to the bare-bones sgpcore implementation
 """
 
 import sys
+from os import path
+
+# if we have a local version of sgpcore, use that:
+if path.isfile(path.join(path.dirname(__file__), '..', 'sgpcore', '__init__.py')):
+	sys.path.append(path.join(path.dirname(__file__), '..'))
 
 _platform = sys.platform
 if _platform == 'darwin':
