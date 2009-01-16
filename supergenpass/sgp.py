@@ -5,6 +5,7 @@ otherwise, falls back to the bare-bones sgpcore implementation
 """
 
 import sys
+sys.path.append('..')
 
 _platform = sys.platform
 if _platform == 'darwin':
