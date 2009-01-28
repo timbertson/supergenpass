@@ -64,6 +64,8 @@ class Main(Command):
 		
 		domain_ = domain.domain_for_url(url)
 		generated_pass = sgp(pass_, domain_, opts.length)
+		
+		print "Generated password of length %s for '%s'" % (opts.length, domain_)
 
 		if self.do(save_clip, generated_pass) is False:
 			print "could not save clipboard. your passowrd is: %s" % (generated_pass)
