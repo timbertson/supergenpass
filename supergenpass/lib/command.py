@@ -7,6 +7,7 @@ from sgpcore import domain, sgp
 
 # local
 import ui
+import persistance
 
 get_pass = 'get_password'
 guess_url = 'guess_url'
@@ -31,8 +32,10 @@ class Main(Command):
 	def configure(self):
 		self.opt('length', int, short='l', default=10, desc="length of generated password")
 		self.opt('ask', bool, default=False, desc="Ask for the password, skipping system store (default is --no-ask)")
-		self.opt('save', bool, default=False, desc="Save password (in system store, default is --no-save")
+		self.opt('save', bool, default=False, desc="Save password (in system store, default is --no-save)")
 		self.opt('notify', bool, default=True, desc="Notify on completion (default is --notify)")
+		self.opt('remember', bool, short='r', default=False, desc="remember this domain in ~/.supergenpass.domains (default is --no-remember)")
+		self.opt('forget', bool, default=False, opposite=False, desc="forget this domain from ~/.supergenpass.domains (undo a previous --remember)")
 		self.arg('url', default = None, desc="url / domain you will use the password for")
 
 	def run(self, opts):
@@ -66,11 +69,15 @@ class Main(Command):
 		generated_pass = sgp(pass_, domain_, opts.length)
 		
 		print "Generated password of length %s for '%s'" % (opts.length, domain_)
-
 		if self.do(save_clip, generated_pass) is False:
 			print "could not save clipboard. your passowrd is: %s" % (generated_pass)
 		if opts.notify:
 			self.do(notify, domain_)
+		if opts.forget:
+			persistance.forget(domain_)
+		else:
+			if opts.remember:
+				persistance.remember(domain_)
 
 
 def has_command(name):
