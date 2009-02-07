@@ -23,6 +23,7 @@ def unique(lst):
 def read_file_lines(filename):
 	f = open(filename)
 	lines = [line.strip() for line in f.readlines()]
+	lines = filter(lambda s: len(s) > 0, lines)
 	f.close()
 	return unique(lines)
 

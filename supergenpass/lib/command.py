@@ -34,11 +34,16 @@ class Main(Command):
 		self.opt('ask', bool, default=False, desc="Ask for the password, skipping system store (default is --no-ask)")
 		self.opt('save', bool, default=False, desc="Save password (in system store, default is --no-save)")
 		self.opt('notify', bool, default=True, desc="Notify on completion (default is --notify)")
-		self.opt('remember', bool, short='r', default=False, desc="remember this domain in ~/.supergenpass.domains (default is --no-remember)")
+		self.opt('remember', bool, short='r', long='remember', default=False, desc="remember this domain in ~/.supergenpass.domains (default is --no-remember)")
 		self.opt('forget', bool, default=False, opposite=False, desc="forget this domain from ~/.supergenpass.domains (undo a previous --remember)")
+		self.opt('list_domains', bool, default=False, long='domains', opposite=False, desc="list all remembered domains")
 		self.arg('url', default = None, desc="url / domain you will use the password for")
 
 	def run(self, opts):
+		if opts.list_domains:
+			print '\n'.join(persistance.get_domains())
+			return
+
 		if opts.save:
 			opts.ask = True
 
