@@ -2,8 +2,14 @@
 import os
 from commands import getstatusoutput
 from keychain import Keychain, KeychainError
-from .. import keyinfo
-from ..command import require_command
+
+import keyinfo
+from command import require_command
+## i think the above two lines should be:
+# from .. import keyinfo
+# from ..command import require_command
+## but python whinges about imporing past top-level packages. pfft...
+
 
 __all__ = ['get_password','save_clipboard','notify','guess_url']
 

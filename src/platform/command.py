@@ -7,7 +7,7 @@ from sgpcore import domain, sgp
 
 # local
 import ui
-import persistance
+import persistence
 
 get_pass = 'get_password'
 guess_url = 'guess_url'
@@ -41,7 +41,7 @@ class Main(Command):
 
 	def run(self, opts):
 		if opts.list_domains:
-			print '\n'.join(persistance.get_domains())
+			print '\n'.join(persistence.get_domains())
 			return
 
 		if opts.save:
@@ -79,10 +79,10 @@ class Main(Command):
 		if opts.notify:
 			self.do(notify, domain_)
 		if opts.forget:
-			persistance.forget(domain_)
+			persistence.forget(domain_)
 		else:
 			if opts.remember:
-				persistance.remember(domain_)
+				persistence.remember(domain_)
 
 
 def has_command(name):
