@@ -15,19 +15,19 @@ def main():
 	_platform = sys.platform
 
 	if _platform == 'darwin':
-		import osx as platform
+		import platform.osx as osplatform
 
 	elif _platform.startswith('linux'):
-		import gnome as platform
+		import platform.gnome as osplatform
 
 	else:
-		platform = None
+		osplatform = None
 
-	if platform:
-		import command
-		return command.Main(platform)
+	if osplatform:
+		import platform.command as command
+		return command.Main(osplatform)
 	else:
-		# fallback to the vanilla sgp:
+		#TODO: fallback to the vanilla sgp:
 		from sgp import main
 		return main()
 
