@@ -3,7 +3,7 @@ import commands
 
 # library
 from mandy import Command
-from sgpcore import domain, sgp
+from supergenpass import domain, sgp
 
 # local
 import ui
@@ -70,7 +70,7 @@ class Main(Command):
 				print "Couldn't save password to os store: %s" % (e,)
 				raise
 		
-		domain_ = domain.domain_for_url(url)
+		domain_ = domain.url_to_domain(url)
 		generated_pass = sgp(pass_, domain_, opts.length)
 		
 		print "Generated password of length %s for '%s'" % (opts.length, domain_)
@@ -105,3 +105,4 @@ class CommandNotInstalledError(OSError):
 	
 	def __str__(self):
 		return self.message
+
