@@ -20,11 +20,11 @@ def notify(domain):
 	"""
 	Send a system notification that the password has been generated
 	"""
-	require_command('mumbles-send', url='http://www.mumbles-project.org/download/')
-	st, output = getstatusoutput("mumbles-send 'SuperGenPass' '%s - password generated'" % domain)
-	if st:
-		raise RuntimeError, output
-
+	import pynotify
+	pynotify.init("supergenpass")
+	notification = pynotify.Notification("supergenpass",
+		"password generated for %s" % (domain,))
+	notification.show()
 
 def guess_url():
 	require_command('expect', package='expect')
