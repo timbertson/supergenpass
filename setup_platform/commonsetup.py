@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import setuptools
-core_packages = setuptools.find_packages(exclude=('test','supergenpass*'))
-main_packages = setuptools.find_packages(exclude=('test','sgpcore*'))
+core_packages = setuptools.find_packages(exclude=('test','platform*', 'sgp-platform'))
+main_packages = setuptools.find_packages(exclude=('test'))
 
 author='Tim Cuthbertson',
 author_email='tim3d.junk+sgp@gmail.com',

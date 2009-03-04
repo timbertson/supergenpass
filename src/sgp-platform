@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 attempts to use a platform-specific version of sgp if available.
-otherwise, falls back to the bare-bones sgpcore implementation
+otherwise, falls back to the bare-bones supergenpass implementation
 """
 
 import sys
