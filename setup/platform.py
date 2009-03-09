@@ -7,7 +7,8 @@ setup(
 	name='supergenpass-platform',
 	version='0.1.3',
 	description='platform integration to make supergenpass more useful for end-users',
-	author='Tim Cuthbertson',
+	author="Matt Giuca & Tim Cuthbertson",
+	author_email='tim3d.junk+sgp@gmail.com',
 	packages=commonsetup.platform_packages,
 	
 	long_description="""Additional OS integration hooks for supergenpass,

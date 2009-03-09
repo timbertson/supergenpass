@@ -15,11 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup
-import warnings
-import os
-import os.path
-import shutil
+from setuptools import *
 import commonsetup
 
 # XXX package_data appears not to be included in a source distribution
@@ -29,7 +25,8 @@ setup(name='supergenpass',
       description="MD5-based password generator",
       long_description="Generates a hash of a master password and domain "
         "pair, ensuring high-quality unique passwords for each site.",
-      author="Matt Giuca",
+      author="Matt Giuca & Tim Cuthbertson",
+      author_email="tim3d.junk+sgp@gmail.com",
       packages=commonsetup.core_packages,
       package_data={'supergenpass': ['domainlist.txt']},
       scripts=['src/sgp'],
