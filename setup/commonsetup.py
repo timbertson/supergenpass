@@ -13,7 +13,7 @@ common_props = {
 		"Development Status :: 4 - Beta",
 	],
 	'keywords': 'supergenpass password generation hash md5',
-	'license': 'GPL',
+	'license': 'GPLv2',
 	'url': 'https://launchpad.net/pysgp',
 	'package_dir': {'': src},
 }
