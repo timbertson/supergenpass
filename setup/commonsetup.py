@@ -7,7 +7,7 @@ core_packages = setuptools.find_packages(src, exclude=('supergenpass_platform*',
 platform_packages = setuptools.find_packages(src, exclude=('supergenpass','supergenpass.*'))
 
 common_props = {
-	'zip_safe':True,
+	'zip_safe':False,
 	'classifiers': [
 		"Programming Language :: Python",
 		"Development Status :: 4 - Beta",

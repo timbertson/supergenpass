@@ -13,6 +13,7 @@ setup(
 	long_description="""Additional OS integration hooks for supergenpass,
 	providing functionality for interacting with standard password stores and browsers.
 	""",
+	package_data={'supergenpass_platform.gnome': ['fresno']},
 
 	install_requires=[
 		'setuptools',
