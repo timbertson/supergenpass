@@ -2,11 +2,11 @@ eggs: core_egg main_egg
 
 core_egg:
 	make clean # this must happen EVERY TIME
-	./setup_core.py bdist_egg
+	./setup/core.py bdist_egg
 
 main_egg:
 	make clean # this must happen EVERY TIME
-	./setup.py bdist_egg
+	./setup/platform.py bdist_egg
 
 clean:
 	rm -rf build build.* *.egg-info

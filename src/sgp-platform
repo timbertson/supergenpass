@@ -15,16 +15,16 @@ def main():
 	_platform = sys.platform
 
 	if _platform == 'darwin':
-		import platform.osx as osplatform
+		import supergenpass_platform.osx as osplatform
 
 	elif _platform.startswith('linux'):
-		import platform.gnome as osplatform
+		import supergenpass_platform.gnome as osplatform
 
 	else:
 		osplatform = None
 
 	if osplatform:
-		import platform.command as command
+		import supergenpass_platform.command as command
 		return command.Main(osplatform)
 	else:
 		#TODO: fallback to the vanilla sgp:

@@ -60,7 +60,7 @@ The source tree is arranged as follows:
 * src/sgp - The basic sgp command-line program.
 * src/supergenpass/ - The core supergenpass Python package (for installation
     into site-packages).
-* src/platform/ - The "platform integration" component, which uses
+* src/supergenpass_platform/ - The "platform integration" component, which uses
     platform-specific code to integrate with various operating systems.
     All platform-specific code should be in this directory.
 
@@ -78,5 +78,6 @@ Linux integration (gnome only, currently)
 * works with firefox to get the current URL if you don't specify one (requires
   the "mozRepl" firefox extension to be installed and running)
 * uses the gnomekeyring service to get/save your master password
+* requires "xsel" (debian package) to copy password to the clipboard
 
 keyring (gnome): http://www.rittau.org/blog/20070726-01
