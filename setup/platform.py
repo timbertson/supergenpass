@@ -14,7 +14,7 @@ setup(
 	providing functionality for interacting with standard password stores and browsers.
 	""",
 	package_data={'supergenpass_platform.gnome': ['fresno']},
-
+	zip_safe=False,
 	install_requires=[
 		'setuptools',
 		'mandy',

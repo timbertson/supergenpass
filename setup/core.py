@@ -33,5 +33,7 @@ setup(name='supergenpass',
       packages=commonsetup.core_packages,
       package_data={'supergenpass': ['domainlist.txt']},
       scripts=['src/sgp'],
+      install_requires=['setuptools'],
+      zip_safe=True,
       **commonsetup.common_props
      )

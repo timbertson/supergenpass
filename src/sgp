@@ -20,6 +20,6 @@
 # Also available as a library (import supergenpass).
 
 from supergenpass import main
-
+import sys
 if __name__ == "__main__":
     sys.exit(main())

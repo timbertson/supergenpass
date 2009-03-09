@@ -1,10 +1,10 @@
-eggs: core_egg main_egg
+eggs: sgp platform
 
-core_egg:
+sgp:
 	make clean # this must happen EVERY TIME
 	./setup/core.py bdist_egg
 
-main_egg:
+platform:
 	make clean # this must happen EVERY TIME
 	./setup/platform.py bdist_egg
 

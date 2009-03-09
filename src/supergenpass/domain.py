@@ -27,6 +27,7 @@ multitude of URLs which might share the same login details.
 
 import os.path
 import re
+import pkg_resources
 
 __all__ = ['url_to_domain', 'domainlist']
 
@@ -39,9 +40,7 @@ def read_domain_list():
     Reads the domain list from the domain list file, and returns it as a
     sequence of strings.
     """
-    filename = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            DOMAINLIST_FILE)
-    file = open(filename)
+    file = pkg_resources.resource_stream(__name__, 'domainlist.txt')
     try:
         for line in file:
             yield line.strip()
