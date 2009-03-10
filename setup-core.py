@@ -14,6 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import os
 
 from setuptools import *
 import commonsetup
@@ -28,8 +29,7 @@ setup(name='supergenpass',
       author="Matt Giuca & Tim Cuthbertson",
       author_email="tim3d.junk+sgp@gmail.com",
       packages=commonsetup.core_packages,
-      package_data={'supergenpass': ['domainlist.txt']},
-      scripts=['src/sgp'],
+      scripts=[os.path.join(commonsetup.src, 'sgp')],
       install_requires=['setuptools'],
       zip_safe=True,
       **commonsetup.common_props

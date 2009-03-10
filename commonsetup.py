@@ -2,7 +2,7 @@
 
 import setuptools
 import os
-src = os.path.join(os.path.dirname(__file__), '..', 'src')
+src = 'src'
 core_packages = setuptools.find_packages(src, exclude=('supergenpass_platform*',))
 platform_packages = setuptools.find_packages(src, exclude=('supergenpass','supergenpass.*'))
 
@@ -15,6 +15,7 @@ common_props = {
 	'license': 'GPLv2',
 	'url': 'https://launchpad.net/pysgp',
 	'package_dir': {'': src},
+	'include_package_data': True,
 }
 
 if __name__ == '__main__':

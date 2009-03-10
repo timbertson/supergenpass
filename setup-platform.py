@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-
+import os
 from setuptools import *
+
 import commonsetup
 
 setup(
@@ -14,13 +15,12 @@ setup(
 	long_description="""Additional OS integration hooks for supergenpass,
 	providing functionality for interacting with standard password stores and browsers.
 	""",
-	package_data={'supergenpass_platform.gnome': ['fresno']},
 	zip_safe=False,
 	install_requires=[
 		'setuptools',
 		'mandy',
 		'supergenpass',
 	],
-	scripts=['src/sgp-platform'],
+	scripts=[os.path.join(commonsetup.src, 'sgp-platform')],
 	**commonsetup.common_props
 )

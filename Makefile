@@ -2,11 +2,11 @@ eggs: sgp platform
 
 sgp:
 	make clean # this must happen EVERY TIME
-	./setup/core.py bdist_egg
+	./setup-core.py bdist_egg
 
 platform:
 	make clean # this must happen EVERY TIME
-	./setup/platform.py bdist_egg
+	./setup-platform.py bdist_egg
 
 clean:
 	rm -rf build build.* *.egg-info
