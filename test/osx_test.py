@@ -1,5 +1,5 @@
 import helper
-from mocktest import mock_on, mock_wrapper, TestCase, pending, ignore
+from mocktest import mock_on, TestCase, pending, ignore
 
 # tested stuff
 import commands
