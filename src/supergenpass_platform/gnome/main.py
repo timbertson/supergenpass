@@ -54,7 +54,8 @@ def guess_url():
 		raise OSError("fresno failed with output: %s\n" % (output) + 
 		              "make sure you have installed mozRepl and it is turned on\n" + 
 		              "(http://github.com/bard/mozrepl/wikis/home)")
-	return output
+	url = output.strip().strip('"') # remove whitespace and quoting
+	return url
 
 
 def get_password():
