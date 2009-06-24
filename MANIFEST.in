@@ -1,0 +1,2 @@
+recursive-include src/supergenpass_platform fresno
+include src/supergenpass/domainlist.txt

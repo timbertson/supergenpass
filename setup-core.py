@@ -19,10 +19,8 @@ import os
 from setuptools import *
 import commonsetup
 
-# XXX package_data appears not to be included in a source distribution
-
 setup(name='supergenpass',
-      version='0.1',
+      version='0.1.1',
       description="MD5-based password generator",
       long_description="Generates a hash of a master password and domain "
         "pair, ensuring high-quality unique passwords for each site.",
