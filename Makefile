@@ -1,13 +1,13 @@
-dist: clean sgp platform
+dist: clean core platform
 
-sgp:
+core:
 	cd core && ./setup.py sdist
 
 platform:
-	cd core && ./setup.py sdist
+	cd platform && ./setup.py sdist
 
 clean:
-	rm -rf {core,platform}/{build*,*.egg-info}
+	rm -rf {core,platform}/{*.egg-info}
 
 clobber: clean
 	rm -rf {core,platform}/dist
@@ -18,4 +18,4 @@ list:
 info:
 	./commonsetup.py
 
-.PHONY: dist clean list info
+.PHONY: dist clean list info platform core
