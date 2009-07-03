@@ -1,23 +1,21 @@
-eggs: sgp platform
+dist: clean sgp platform
 
 sgp:
-	make clean # this must happen EVERY TIME
-	./setup-core.py bdist_egg
+	cd core && ./setup.py sdist
 
 platform:
-	make clean # this must happen EVERY TIME
-	./setup-platform.py bdist_egg
+	cd core && ./setup.py sdist
 
 clean:
-	rm -rf build build.* *.egg-info
+	rm -rf {core,platform}/{build*,*.egg-info}
 
 clobber: clean
-	rm -rf dist
+	rm -rf {core,platform}/dist
 
 list:
-	find dist -iname '*.egg' -exec echo --------- \; -exec zipinfo {} \;
+	find dist -iname '*.tar.gz' -exec echo --------- \; -exec zipinfo {} \;
 
 info:
 	./commonsetup.py
 
-.PHONY: eggs clean list info
+.PHONY: dist clean list info

@@ -2,9 +2,6 @@
 
 import setuptools
 import os
-src = 'src'
-core_packages = setuptools.find_packages(src, exclude=('supergenpass_platform*',))
-platform_packages = setuptools.find_packages(src, exclude=('supergenpass','supergenpass.*'))
 
 common_props = {
 	'classifiers': [
@@ -14,7 +11,7 @@ common_props = {
 	'keywords': 'supergenpass password generation hash md5',
 	'license': 'GPLv2',
 	'url': 'https://launchpad.net/pysgp',
-	'package_dir': {'': src},
+	'package_dir': {'': '.'},
 	'include_package_data': True,
 }
 

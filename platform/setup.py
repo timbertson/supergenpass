@@ -10,7 +10,7 @@ setup(
 	description='platform integration to make supergenpass more useful for end-users',
 	author="Matt Giuca & Tim Cuthbertson",
 	author_email='tim3d.junk+sgp@gmail.com',
-	packages=setuptools.find_packages(exclude=('test*',)),
+	packages=find_packages(exclude=('test*',)),
 	
 	long_description="""Additional OS integration hooks for supergenpass,
 	providing functionality for interacting with standard password stores and browsers.
@@ -21,6 +21,6 @@ setup(
 		'mandy',
 		'supergenpass',
 	],
-	scripts=[os.path.join(commonsetup.src, 'sgp-platform')],
+	scripts=['sgp-platform'],
 	**commonsetup.common_props
 )
