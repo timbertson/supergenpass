@@ -49,7 +49,7 @@ def guess_url():
 	if getstatusoutput("firefox -remote 'ping()'")[0] != 0:
 		# firefox is not running
 		return None
-	(status, output) = getstatusoutput('\'%s\' -j content.location.href' % (fresno,))
+	(status, output) = getstatusoutput('bash \'%s\' -j content.location.href' % (fresno,))
 	if status != 0:
 		raise OSError("fresno failed with output: %s\n" % (output) + 
 		              "make sure you have installed mozRepl and it is turned on\n" + 
