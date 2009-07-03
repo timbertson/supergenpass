@@ -17,7 +17,17 @@
 import os
 
 from setuptools import *
-import commonsetup
+
+common_props = {
+	'classifiers': [
+		"Programming Language :: Python",
+		"Development Status :: 4 - Beta",
+	],
+	'keywords': 'supergenpass password generation hash md5',
+	'license': 'GPLv2',
+	'url': 'https://launchpad.net/pysgp',
+	'include_package_data': True,
+}
 
 setup(name='supergenpass',
       version='0.1.1',
@@ -30,6 +40,6 @@ setup(name='supergenpass',
       scripts=['sgp'],
       install_requires=['setuptools'],
       zip_safe=True,
-      **commonsetup.common_props
+      **common_props
      )
 

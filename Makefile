@@ -15,7 +15,5 @@ clobber: clean
 list:
 	find dist -iname '*.tar.gz' -exec echo --------- \; -exec zipinfo {} \;
 
-info:
-	./commonsetup.py
 
 .PHONY: dist clean list info platform core
