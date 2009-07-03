@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#TODO: replace with symlink
 
 import setuptools
 import os
@@ -20,6 +21,6 @@ common_props = {
 
 if __name__ == '__main__':
 	for k,v in globals().items():
-		if k.startswith('_') or k in ('common_props', 'os','setuptools'):
+		if k.startswith('_') or k in ('common_props', 'os','setutools'):
 			continue
 		print "%s = %r" % (k,v)

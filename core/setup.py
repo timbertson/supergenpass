@@ -26,9 +26,10 @@ setup(name='supergenpass',
         "pair, ensuring high-quality unique passwords for each site.",
       author="Matt Giuca & Tim Cuthbertson",
       author_email="tim3d.junk+sgp@gmail.com",
-      packages=commonsetup.core_packages,
-      scripts=[os.path.join(commonsetup.src, 'sgp')],
+      packages=setuptools.find_packages(exclude=('test*',)),
+      scripts=['sgp')],
       install_requires=['setuptools'],
       zip_safe=True,
       **commonsetup.common_props
      )
+
