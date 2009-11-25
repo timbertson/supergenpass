@@ -44,19 +44,11 @@ def notify(domain):
 	notification.show()
 
 def guess_url():
-	require_command('expect', package='expect')
-	fresno = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fresno')
+	import firefox_url
 	if getstatusoutput("firefox -remote 'ping()'")[0] != 0:
 		# firefox is not running
 		return None
-	(status, output) = getstatusoutput('bash \'%s\' -j content.location.href' % (fresno,))
-	if status != 0:
-		raise OSError("fresno failed with output: %s\n" % (output) + 
-		              "make sure you have installed mozRepl and it is turned on\n" + 
-		              "(http://github.com/bard/mozrepl/wikis/home)")
-	url = output.strip().strip('"') # remove whitespace and quoting
-	return url
-
+	return firefox_url.get()
 
 def get_password():
 	try:
