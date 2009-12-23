@@ -30,6 +30,7 @@ def usage(progname):
     print "                 (Will prompt if not supplied)"
     print "    OPTIONS"
     print "        -l       Generated password length"
+    print "        -q       Quiet mode (just print password)"
     print "        --help   This help"
 
 def main(argv=None):
@@ -37,17 +38,20 @@ def main(argv=None):
         argv = sys.argv
 
     try:
-        opts, args = getopt.getopt(argv[1:], "l:", ["help"])
+        opts, args = getopt.getopt(argv[1:], "l:q", ["help"])
     except getopt.error, msg:
          usage(argv[0])
          return 1
 
     # process options
     length = None
+    quiet = False
     for o, a in opts:
         if o == "--help":
             usage(argv[0])
             return 1
+        elif o == "-q":
+            quiet = True
         elif o == "-l":
             try:
                 length = int(a)
@@ -92,6 +96,9 @@ def main(argv=None):
 
     domain = url_to_domain(url)
     password = sgp(passwd, domain, length)
-    print "Domain: %s" % domain
-    print "Password: %s" % password
+    if quiet:
+      print password
+    else:
+      print "Domain: %s" % domain
+      print "Password: %s" % password
 
