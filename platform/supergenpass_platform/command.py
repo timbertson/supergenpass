@@ -54,6 +54,7 @@ class Main(Command):
 		self.opt('remember', bool, short='r', long='remember', default=False, desc="remember this domain in ~/.supergenpass.domains (default is --no-remember)")
 		self.opt('forget', bool, default=False, opposite=False, desc="forget this domain from ~/.supergenpass.domains (undo a previous --remember)")
 		self.opt('list_domains', bool, default=False, long='domains', opposite=False, desc="list all remembered domains")
+		self.opt('print_password', bool, short='p', default=False, long='print', opposite=False, desc="just print generated password")
 		self.arg('url', default = None, desc="url / domain you will use the password for")
 
 	def run(self, opts):
@@ -90,9 +91,12 @@ class Main(Command):
 		domain_ = domain.url_to_domain(url)
 		generated_pass = sgp(pass_, domain_, opts.length)
 		
-		print "Generated password of length %s for '%s'" % (opts.length, domain_)
-		if self.do(save_clip, generated_pass) is False:
-			print "could not save clipboard. your passowrd is: %s" % (generated_pass)
+		if opts.print_password:
+			print generated_pass
+		else:
+			print "Generated password of length %s for '%s'" % (opts.length, domain_)
+			if self.do(save_clip, generated_pass) is False:
+				print "could not save clipboard. your passowrd is: %s" % (generated_pass)
 		if opts.notify:
 			self.do(notify, domain_)
 		if opts.forget:
