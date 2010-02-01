@@ -15,7 +15,7 @@ common_props = {
 
 setup(
 	name='supergenpass-platform',
-	version='0.1.4',
+	version='0.1.5',
 	description='platform integration to make supergenpass more useful for end-users',
 	author="Matt Giuca & Tim Cuthbertson",
 	author_email='tim3d.junk+sgp@gmail.com',
@@ -27,7 +27,6 @@ setup(
 	zip_safe=False,
 	install_requires=[
 		'setuptools',
-		'mandy',
 		'supergenpass',
 	],
 	scripts=['sgp-platform'],

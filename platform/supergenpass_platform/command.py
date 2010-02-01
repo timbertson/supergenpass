@@ -17,9 +17,10 @@
 
 #std
 import commands
+import sys
+from optparse import OptionParser
 
 # library
-from mandy import Command
 from supergenpass import domain, sgp
 
 # local
@@ -32,10 +33,10 @@ save_pass = 'save_password'
 save_clip = 'save_clipboard'
 notify = 'notify'
 
-class Main(Command):
+class Main(object):
 	def __init__(self, os_integration_provider):
 		self.os_integration = os_integration_provider
-		super(self.__class__,self).__init__()
+		self.run()
 
 	def can_do(self, action):
 		return hasattr(self.os_integration, action)
@@ -46,18 +47,28 @@ class Main(Command):
 			return False
 		return getattr(self.os_integration, action)(*args, **kwargs)
 	
-	def configure(self):
-		self.opt('length', int, short='l', default=10, desc="length of generated password")
-		self.opt('ask', bool, default=False, desc="Ask for the password, skipping system store (default is --no-ask)")
-		self.opt('save', bool, default=False, desc="Save password (in system store, default is --no-save)")
-		self.opt('notify', bool, default=True, desc="Notify on completion (default is --notify)")
-		self.opt('remember', bool, short='r', long='remember', default=False, desc="remember this domain in ~/.supergenpass.domains (default is --no-remember)")
-		self.opt('forget', bool, default=False, opposite=False, desc="forget this domain from ~/.supergenpass.domains (undo a previous --remember)")
-		self.opt('list_domains', bool, default=False, long='domains', opposite=False, desc="list all remembered domains")
-		self.opt('print_password', bool, short='p', default=False, long='print', opposite=False, desc="just print generated password")
-		self.arg('url', default = None, desc="url / domain you will use the password for")
+	def run(self):
+		parser = OptionParser("%prog [options] [url_or_domain]")
+		parser.add_option('-l', '--length', type='int', default=10, help='length of generated password (%default)')
+		parser.add_option('--ask', action='store_true', default=False, help='Ask for the password, skipping system store (default is --no-ask)')
+		parser.add_option('--no-ask', dest='ask', action='store_false')
+		parser.add_option('--save', action='store_true', default=False, help='Save password (in system store, default is --no-save)')
+		parser.add_option('--no-save', dest='save', action='store_false')
+		parser.add_option('--notify', action='store_true', default=False, help='Notify on completion (default is --notify)')
+		parser.add_option('-q', '--no-notify', dest='notify', action='store_false')
+		parser.add_option('-r', '--remember', action='store_true', default=True, help='remember on completion (default is --remember)')
+		parser.add_option('--no-remember', dest='remember', action='store_false')
+		parser.add_option('--forget', action='store_true', default=False, help='forget this domain from ~/.supergenpass.domains (undo a previous --remember)')
+		parser.add_option('--domains', dest='list_domains', action='store_true', default=False, help='list all remembered domains')
+		parser.add_option('-p', '--print', dest='print_password', action='store_true', default=False, help='just print generated password')
 
-	def run(self, opts):
+		opts, args =  parser.parse_args()
+		if len(args) > 1:
+			parser.print_help()
+			sys.exit(1)
+		else:
+			url = args[0] if args else None
+
 		if opts.list_domains:
 			print '\n'.join(persistence.get_domains())
 			return
@@ -65,7 +76,6 @@ class Main(Command):
 		if opts.save:
 			opts.ask = True
 
-		url = opts.url
 		if not url:
 			url = self.do(guess_url)
 		if not url:
