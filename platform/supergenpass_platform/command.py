@@ -54,7 +54,7 @@ class Main(object):
 		parser.add_option('--no-ask', dest='ask', action='store_false')
 		parser.add_option('--save', action='store_true', default=False, help='Save password (in system store, default is --no-save)')
 		parser.add_option('--no-save', dest='save', action='store_false')
-		parser.add_option('--notify', action='store_true', default=False, help='Notify on completion (default is --notify)')
+		parser.add_option('--notify', action='store_true', default=True, help='Notify on completion (default is --notify)')
 		parser.add_option('-q', '--no-notify', dest='notify', action='store_false')
 		parser.add_option('-r', '--remember', action='store_true', default=True, help='remember on completion (default is --remember)')
 		parser.add_option('--no-remember', dest='remember', action='store_false')
