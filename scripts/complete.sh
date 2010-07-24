@@ -15,5 +15,7 @@ function _supergenpass {
 	COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
 	return 0
 }
+
+#example usage:
 complete -F _supergenpass supergenpass
 complete -F _supergenpass p
