@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type='text/xsl' href='interface.xsl'?>
+<interface uri="http://gfxmonk.net/dist/0install/supergenpass-platform.xml" xmlns="http://zero-install.sourceforge.net/2004/injector/interface">
+  <name>supergenpass-platform</name>
+  <summary>platform-specific conveniences for supergenpass</summary>
+  <description>
+		features include remembering domains, using current page (firefox/safari) and copying password into
+		your clipboard
+  </description>
+  <needs-terminal/>
+  <group main="sgp-platform">
+    <requires interface="http://gfxmonk.net/dist/0install/supergenpass.xml">
+      <environment insert="" mode="prepend" name="PYTHONPATH"/>
+    </requires>
+    <implementation id="sha1new=d030ade6bfaab2fc9edd13fa5e496e307346c35e" released="2010-07-24" version="0.1.6">
+      <manifest-digest sha256="ab37c3ac72e65452e4fc7057b44561b2e254a2c688a6a06598d6f86d2528d59a"/>
+      <archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.1.6.tgz" size="15957"/>
+    </implementation>
+  </group>
+</interface>
