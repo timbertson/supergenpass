@@ -4,6 +4,7 @@
 	<name>supergenpass-platform</name>
 	<summary>platform-specific conveniences for supergenpass</summary>
 	<publish mode="featured" xmlns="http://gfxmonk.net/dist/0install"/>
+	<homepage>http://github.com/gfxmonk/supergenpass</homepage>
 	<description>
 		features include remembering domains, using current page (firefox/safari) and copying password into
 		your clipboard

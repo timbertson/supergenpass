@@ -4,6 +4,7 @@
 	<name>supergenpass</name>
 	<summary>python implementation of supergenpass.com</summary>
 	<publish mode="featured" xmlns="http://gfxmonk.net/dist/0install"/>
+	<homepage>http://github.com/gfxmonk/supergenpass</homepage>
 	<description>
 	</description>
 	<needs-terminal/>
