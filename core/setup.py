@@ -14,6 +14,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+## NOTE: ##
+## setup.py is not maintained, and is only provided for convenience.
+## please see http://gfxmonk.net/dist/0install/index/ for
+## up-to-date installable packages.
 import os
 
 from setuptools import *
