@@ -14,6 +14,9 @@
 		<requires interface="http://gfxmonk.net/dist/0install/supergenpass.xml">
 			<environment insert="" mode="prepend" name="PYTHONPATH"/>
 		</requires>
+		<requires interface="http://gfxmonk.net/dist/0install/xsel.xml">
+			<environment insert="" mode="prepend" name="PATH"/>
+		</requires>
 		<implementation id="sha1new=d030ade6bfaab2fc9edd13fa5e496e307346c35e" released="2010-07-24" version="0.1.6">
 			<manifest-digest sha256="ab37c3ac72e65452e4fc7057b44561b2e254a2c688a6a06598d6f86d2528d59a"/>
 			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.1.6.tgz" size="15957"/>
