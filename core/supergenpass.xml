@@ -9,6 +9,7 @@
 	</description>
 	<needs-terminal/>
 	<group main="sgp">
+		<environment insert="" mode="prepend" name="PYTHONPATH"/>
 		<implementation id="sha1new=b9f74c576b37e8153fe4fb1e85d9e2b9e92a959e" released="2010-07-24" version="0.1.1">
 			<manifest-digest sha256="eda7cc3e5aa7db53a9807c704291c54e73e176c459ae82d7ae3ad38b50c28ee4"/>
 			<archive href="http://gfxmonk.net/dist/0install/supergenpass/supergenpass-0.1.1.tgz" size="16653"/>
