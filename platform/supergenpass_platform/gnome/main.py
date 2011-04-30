@@ -41,6 +41,7 @@ def notify(domain):
 	pynotify.init("supergenpass")
 	notification = pynotify.Notification("supergenpass",
 		"password generated for %s" % (domain,))
+	notification.set_hint_double('transient', 1)
 	notification.show()
 
 def guess_url():
