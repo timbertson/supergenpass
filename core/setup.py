@@ -44,7 +44,7 @@ setup(name='supergenpass',
       packages=find_packages(exclude=('test*',)),
       scripts=['sgp'],
       install_requires=['setuptools'],
-      zip_safe=True,
+      zip_safe=False,
       **common_props
      )
 
