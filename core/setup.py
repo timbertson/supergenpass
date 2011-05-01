@@ -35,7 +35,7 @@ common_props = {
 }
 
 setup(name='supergenpass',
-      version='0.1.1',
+      version='0.1.2',
       description="MD5-based password generator",
       long_description="Generates a hash of a master password and domain "
         "pair, ensuring high-quality unique passwords for each site.",
