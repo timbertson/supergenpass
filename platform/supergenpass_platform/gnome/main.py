@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
+import os, sys
 from commands import getstatusoutput
 from ..command import require_command
 from .. import keyinfo
@@ -25,13 +25,15 @@ def save_clipboard(data):
 	"""
 	Save data to the clipboard, using the xsel command-line tool.
 	"""
-	require_command('xsel', package='xsel')
-	clipboard = os.popen('xsel -i --clipboard', 'w') # take input, place on clipboard
-	clipboard.write(data)
-	status = clipboard.close()
-	if status is not None:
-		raise RuntimeError("Could not save data to clipboard")
-	print "  (password saved to the clipboard)"
+	try:
+		import gtk
+		clipboard = gtk.clipboard_get()
+		clipboard.set_text(data)
+		clipboard.store()
+		print "  (password saved to the clipboard)"
+	except StandardError, e:
+		print >> sys.stderr, e
+		return False
 
 def notify(domain):
 	"""
@@ -45,11 +47,7 @@ def notify(domain):
 	notification.show()
 
 def guess_url():
-	import firefox_url
-	if getstatusoutput("firefox -remote 'ping()'")[0] != 0:
-		# firefox is not running
-		return None
-	return firefox_url.get()
+	return None
 
 def get_password():
 	try:

@@ -1,3 +1,6 @@
+0: VERSION
+	mkzero-gfxmonk -p supergenpass_platform -p setup.py -p sgp-platform
+
 dist: clean core platform
 
 core:
@@ -16,4 +19,4 @@ list:
 	find dist -iname '*.tar.gz' -exec echo --------- \; -exec zipinfo {} \;
 
 
-.PHONY: dist clean list info platform core
+.PHONY: dist clean list info platform core 0

@@ -13,6 +13,7 @@
 	<group main="sgp-platform">
 		<requires interface="http://gfxmonk.net/dist/0install/supergenpass.xml"/>
 		<requires interface="http://gfxmonk.net/dist/0install/xsel.xml"/>
+		<requires interface="http://gfxmonk.net/dist/0install/pynotify.xml"/>
 		<implementation id="sha1new=d030ade6bfaab2fc9edd13fa5e496e307346c35e" released="2010-07-24" version="0.1.6">
 			<manifest-digest sha256="ab37c3ac72e65452e4fc7057b44561b2e254a2c688a6a06598d6f86d2528d59a"/>
 			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.1.6.tgz" size="15957"/>
@@ -20,6 +21,14 @@
 		<implementation id="sha1new=38eca093c49dfd025c7a63610ff20916395dada1" released="2011-05-01" version="0.1.7">
 			<manifest-digest sha256="939a58cb3b40d81a3ca5b7cbf1be3f419456582ce28468a26f89f21eeac02f9e"/>
 			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.1.7.tgz" size="16504"/>
+		</implementation>
+	</group>
+	<group main="sgp-platform">
+		<requires interface="http://gfxmonk.net/dist/0install/supergenpass.xml"/>
+		<requires interface="http://gfxmonk.net/dist/0install/pynotify.xml"/>
+		<implementation id="sha1new=8250abe387eb7a0991fa4b6c34057d7c7af6a3a7" released="2011-10-05" version="0.1.8">
+			<manifest-digest sha256="55f91ddd241687635033c2401694a70db0014efc86ae89a9095faa79862f3039"/>
+			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.1.8.tgz" size="16389"/>
 		</implementation>
 	</group>
 </interface>
