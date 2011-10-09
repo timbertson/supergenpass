@@ -85,7 +85,7 @@ class Main(object):
 		if not opts.ask:
 			try:
 				pass_ = self.do(get_pass)
-			except RuntimeError: pass
+			except (StandardError): pass
 		if not pass_:
 			pass_ = ui.get_password('Enter master password: ')
 
@@ -94,7 +94,7 @@ class Main(object):
 				done = self.do(save_pass, pass_)
 				if done is False:
 					raise RuntimeError, "not supported by os integration module"
-			except RuntimeError, e:
+			except (StandardError), e:
 				print "Couldn't save password to os store: %s" % (e,)
 				raise
 		
