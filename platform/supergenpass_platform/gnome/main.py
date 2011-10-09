@@ -19,7 +19,6 @@ import os, sys
 from commands import getstatusoutput
 from ..command import require_command
 from .. import keyinfo
-import keyring
 
 def save_clipboard(data):
 	"""
@@ -50,12 +49,14 @@ def guess_url():
 	return None
 
 def get_password():
+	import keyring
 	try:
 		return _store().get_credentials()[1]
 	except keyring.gkey.NoMatchError:
 		raise RuntimeError("no password found")
 	
 def save_password(p):
+	import keyring
 	try:
 		_store().set_credentials((keyinfo.account, p))
 	except keyring.gkey.NoMatchError, e:
@@ -64,6 +65,7 @@ def save_password(p):
 
 _key_store = None
 def _store():
+	import keyring
 	global _key_store
 	if _key_store is None:
 		_key_store = keyring.Keyring(keyinfo.account, keyinfo.realm, keyinfo.protocol)
