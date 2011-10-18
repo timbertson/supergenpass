@@ -43,7 +43,7 @@ class Main(object):
 	
 	def do(self, action, *args, **kwargs):
 		if not self.can_do(action):
-			print "Warning: os integration %s doesn't support function %s" % (self.os_integration.__name__, action)
+			print >> sys.stderr, "Warning: os integration %s doesn't support function %s" % (self.os_integration.__name__, action)
 			return False
 		return getattr(self.os_integration, action)(*args, **kwargs)
 	
@@ -60,7 +60,7 @@ class Main(object):
 		parser.add_option('--no-remember', dest='remember', action='store_false')
 		parser.add_option('--forget', action='store_true', default=False, help='forget this domain from ~/.supergenpass.domains (undo a previous --remember)')
 		parser.add_option('--domains', dest='list_domains', action='store_true', default=False, help='list all remembered domains')
-		parser.add_option('-p', '--print', dest='print_password', action='store_true', default=False, help='just print generated password')
+		parser.add_option('-p', '--print', dest='print_password', action='store_true', default=None, help='just print generated password')
 
 		opts, args =  parser.parse_args()
 		if len(args) > 1:
@@ -75,6 +75,10 @@ class Main(object):
 
 		if opts.save:
 			opts.ask = True
+
+		if opts.print_password is None and not sys.stdout.isatty():
+			print >> sys.stderr, "sgp: assuming --print since stdout is not a TTY"
+			opts.print_password = True
 
 		if not url:
 			url = self.do(guess_url)
@@ -104,9 +108,9 @@ class Main(object):
 		if opts.print_password:
 			print generated_pass
 		else:
-			print "Generated password of length %s for '%s'" % (opts.length, domain_)
+			print >> sys.stderr, "Generated password of length %s for '%s'" % (opts.length, domain_)
 			if self.do(save_clip, generated_pass) is False:
-				print "could not save clipboard. your passowrd is: %s" % (generated_pass)
+				print >> sys.stderr, "could not save clipboard. your passowrd is: %s" % (generated_pass)
 		if opts.notify:
 			self.do(notify, domain_)
 		if opts.forget:

@@ -32,7 +32,7 @@ def get_password():
 	try:
 		return _store().password()
 	except KeychainError:
-		print "Couldn't get keychain password"
+		print >> sys.stderr, "Couldn't get keychain password"
 		raise
 	
 def save_clipboard(data):
@@ -44,7 +44,7 @@ def save_clipboard(data):
 	status = clipboard.close()
 	if status is not None:
 		raise RuntimeError, "Could not save data to clipboard"
-	print "  (password saved to the clipboard)"
+	print >> sys.stderr, "  (password saved to the clipboard)"
 
 def save_password(p):
 	"""

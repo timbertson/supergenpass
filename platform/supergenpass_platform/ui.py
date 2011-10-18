@@ -20,15 +20,16 @@
 import sys
 from getpass import getpass
 
-def _get(func):
+def _input(prompt, fn):
 	try:
-		return func()
+		print >> sys.stderr, prompt,
+		return fn()
 	except (EOFError, KeyboardInterrupt):
-		print
+		print >> sys.stderr
 		sys.exit(2)
 
 def get_input(prompt):
-	return _get(lambda: raw_input(prompt))
+	return _input(prompt, raw_input)
 
 def get_password(prompt):
-	return _get(lambda: getpass(prompt))
+	return _input(prompt, lambda: getpass(''))

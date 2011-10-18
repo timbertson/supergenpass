@@ -29,7 +29,7 @@ def save_clipboard(data):
 		clipboard = gtk.clipboard_get()
 		clipboard.set_text(data)
 		clipboard.store()
-		print "  (password saved to the clipboard)"
+		print >> sys.stderr, "  (password saved to the clipboard)"
 	except StandardError, e:
 		print >> sys.stderr, e
 		return False
