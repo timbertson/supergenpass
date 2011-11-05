@@ -38,5 +38,9 @@
 			<manifest-digest sha256="7ad8c6f7dbe170f1d6f36a672d901e0bcc134423e20369498936b87b419176ed"/>
 			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.1.10.tgz" size="16632"/>
 		</implementation>
+		<implementation id="sha1new=57a431fe2a879028e624b37f335883955eac4c32" released="2011-11-05" version="0.1.11">
+			<manifest-digest sha256="91c2182f11b5e3ca4eac7cb09f6c5dfe02a752b141166b8511359fa85aafc341"/>
+			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.1.11.tgz" size="16873"/>
+		</implementation>
 	</group>
 </interface>

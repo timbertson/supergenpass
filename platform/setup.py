@@ -20,7 +20,7 @@ common_props = {
 
 setup(
 	name='supergenpass-platform',
-	version='0.1.10',
+	version='0.1.11',
 	description='platform integration to make supergenpass more useful for end-users',
 	author="Matt Giuca & Tim Cuthbertson",
 	author_email='tim3d.junk+sgp@gmail.com',
