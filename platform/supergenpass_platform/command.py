@@ -80,11 +80,6 @@ class Main(object):
 			print >> sys.stderr, "sgp: assuming --print since stdout is not a TTY"
 			opts.print_password = True
 
-		if not url:
-			url = self.do(guess_url)
-		if not url:
-			url = ui.get_input('Enter domain / URL: ')
-		
 		pass_ = None
 		if not opts.ask:
 			try:
@@ -92,6 +87,11 @@ class Main(object):
 			except (StandardError): pass
 		if not pass_:
 			pass_ = ui.get_password('Enter master password: ')
+
+		if not url:
+			url = self.do(guess_url)
+		if not url:
+			url = ui.get_input('Enter domain / URL: ')
 
 		if opts.save:
 			try:
@@ -110,7 +110,7 @@ class Main(object):
 		else:
 			print >> sys.stderr, "Generated password of length %s for '%s'" % (opts.length, domain_)
 			if self.do(save_clip, generated_pass) is False:
-				print >> sys.stderr, "could not save clipboard. your passowrd is: %s" % (generated_pass)
+				print >> sys.stderr, "could not save clipboard. your password is: %s" % (generated_pass)
 		if opts.notify:
 			self.do(notify, domain_)
 		if opts.forget:
