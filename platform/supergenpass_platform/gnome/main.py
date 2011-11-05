@@ -47,12 +47,14 @@ def notify(domain):
 
 def guess_url():
 	import subprocess
-	proc = subprocess.Popen(['last-visited-url'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-	out, err = proc.communicate()
-	if proc.returncode == 0:
-		return out.strip()
-	else:
-		print err
+	try:
+		proc = subprocess.Popen(['last-visited-url'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		out, err = proc.communicate()
+		if proc.returncode == 0:
+			return out.strip()
+		else:
+			print err
+	except OSError: pass
 	return None
 
 def get_password():
