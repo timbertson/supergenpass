@@ -24,6 +24,12 @@
 		</implementation>
 	</group>
 	<group main="sgp-platform">
+		<requires interface="http://repo.roscidus.com/python/python">
+			<version before="3"/>
+		</requires>
+		<command name="run" path="sgp-platform">
+			<runner interface="http://repo.roscidus.com/python/python"/>
+		</command>
 		<requires interface="http://gfxmonk.net/dist/0install/supergenpass.xml"/>
 		<requires interface="http://gfxmonk.net/dist/0install/pynotify.xml"/>
 		<implementation id="sha1new=8250abe387eb7a0991fa4b6c34057d7c7af6a3a7" released="2011-10-05" version="0.1.8">

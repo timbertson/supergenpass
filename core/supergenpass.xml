@@ -1,14 +1,20 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <?xml-stylesheet type='text/xsl' href='interface.xsl'?>
-<interface uri="http://gfxmonk.net/dist/0install/supergenpass.xml" xmlns="http://zero-install.sourceforge.net/2004/injector/interface">
+<interface xmlns="http://zero-install.sourceforge.net/2004/injector/interface" uri="http://gfxmonk.net/dist/0install/supergenpass.xml">
 	<name>supergenpass</name>
 	<summary>python implementation of supergenpass.com</summary>
-	<publish mode="featured" xmlns="http://gfxmonk.net/dist/0install"/>
+	<publish xmlns="http://gfxmonk.net/dist/0install" mode="featured"/>
 	<homepage>http://github.com/gfxmonk/supergenpass</homepage>
 	<description>
 	</description>
 	<needs-terminal/>
 	<group main="sgp">
+		<requires interface="http://repo.roscidus.com/python/python">
+			<version before="3"/>
+		</requires>
+		<command name="run">
+			<runner interface="http://repo.roscidus.com/python/python"/>
+		</command>
 		<environment insert="" mode="prepend" name="PYTHONPATH"/>
 		<implementation id="sha1new=b9f74c576b37e8153fe4fb1e85d9e2b9e92a959e" released="2010-07-24" version="0.1.1">
 			<manifest-digest sha256="eda7cc3e5aa7db53a9807c704291c54e73e176c459ae82d7ae3ad38b50c28ee4"/>
