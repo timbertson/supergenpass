@@ -20,20 +20,6 @@ from commands import getstatusoutput
 from ..command import require_command
 from .. import keyinfo
 
-def save_clipboard(data):
-	"""
-	Save data to the clipboard, using the xsel command-line tool.
-	"""
-	try:
-		import gtk
-		clipboard = gtk.clipboard_get()
-		clipboard.set_text(data)
-		clipboard.store()
-		print >> sys.stderr, "  (password saved to the clipboard)"
-	except StandardError, e:
-		print >> sys.stderr, e
-		return False
-
 def notify(domain):
 	"""
 	Send a system notification that the password has been generated

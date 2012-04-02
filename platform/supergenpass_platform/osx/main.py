@@ -22,12 +22,11 @@ from .. import keyinfo
 from ..command import require_command
 
 
-__all__ = ['get_password','save_clipboard','notify','guess_url']
+__all__ = ['get_password','notify','guess_url']
 
 # contract with the main module
 # get_password: get the password from the password storage
 #    ask the user for it if it cannot be found, or if ask = True
-# save_clipboard: save the sepcified data to the clipboard
 def get_password():
 	try:
 		return _store().password()
@@ -35,17 +34,6 @@ def get_password():
 		print >> sys.stderr, "Couldn't get keychain password"
 		raise
 	
-def save_clipboard(data):
-	"""
-	Save data to the clipboard, using the pbcopy command-line tool.
-	"""
-	clipboard = os.popen('pbcopy', 'w')
-	clipboard.write(data)
-	status = clipboard.close()
-	if status is not None:
-		raise RuntimeError, "Could not save data to clipboard"
-	print >> sys.stderr, "  (password saved to the clipboard)"
-
 def save_password(p):
 	"""
 	save password to keychain

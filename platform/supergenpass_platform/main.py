@@ -20,8 +20,7 @@ from os import path
 
 def main():
 	"""
-	attempts to use a platform-specific version of sgp if available.
-	otherwise, falls back to the bare-bones supergenpass implementation
+	Detect platform, and run Command() using platform-specific functionality
 	"""
 	# if we have a local version of supergenpass, use that:
 	if path.isfile(path.join(path.dirname(__file__), '..', 'supergenpass', '__init__.py')):
@@ -34,16 +33,11 @@ def main():
 
 	elif _platform.startswith('linux'):
 		import supergenpass_platform.gnome as osplatform
-
 	else:
 		osplatform = None
 
-	if osplatform:
-		import supergenpass_platform.command as command
-		return command.Main(osplatform)
-	else:
-		from supergenpass import main
-		return main()
+	import supergenpass_platform.command as command
+	return command.Main(osplatform)
 
 if __name__ == '__main__':
 	sys.exit(main())

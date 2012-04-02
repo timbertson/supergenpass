@@ -43,7 +43,8 @@ class Main(object):
 	
 	def do(self, action, *args, **kwargs):
 		if not self.can_do(action):
-			print >> sys.stderr, "Warning: os integration %s doesn't support function %s" % (self.os_integration.__name__, action)
+			if self.opts.verbose:
+				print >> sys.stderr, "Warning: os integration %s doesn't support function %s" % (getattr(self.os_integration, '__name__', '(none)'), action)
 			return False
 		return getattr(self.os_integration, action)(*args, **kwargs)
 	
@@ -60,9 +61,11 @@ class Main(object):
 		parser.add_option('--no-remember', dest='remember', action='store_false')
 		parser.add_option('--forget', action='store_true', default=False, help='forget this domain from ~/.supergenpass.domains (undo a previous --remember)')
 		parser.add_option('--domains', dest='list_domains', action='store_true', default=False, help='list all remembered domains')
+		parser.add_option('-v', '--verbose', dest='verbose', action='store_true', default=False, help='more information')
 		parser.add_option('-p', '--print', dest='print_password', action='store_true', default=None, help='just print generated password')
 
 		opts, args =  parser.parse_args()
+		self.opts = opts
 		if len(args) > 1:
 			parser.print_help()
 			sys.exit(1)
@@ -77,7 +80,8 @@ class Main(object):
 			opts.ask = True
 
 		if opts.print_password is None and not sys.stdout.isatty():
-			print >> sys.stderr, "sgp: assuming --print since stdout is not a TTY"
+			if opts.verbose:
+				print >> sys.stderr, "sgp: assuming --print since stdout is not a TTY"
 			opts.print_password = True
 
 		if not url:
@@ -109,7 +113,10 @@ class Main(object):
 			print generated_pass
 		else:
 			print >> sys.stderr, "Generated password of length %s for '%s'" % (opts.length, domain_)
-			if self.do(save_clip, generated_pass) is False:
+			try:
+				save_clipboard(generated_pass)
+				print >> sys.stderr, "  (password saved to the clipboard)"
+			except (StandardError, ImportError):
 				print >> sys.stderr, "could not save clipboard. your password is: %s" % (generated_pass)
 		if opts.notify:
 			self.do(notify, domain_)
@@ -119,6 +126,13 @@ class Main(object):
 			if opts.remember:
 				persistence.remember(domain_)
 
+def save_clipboard(content):
+	from Tkinter import Tk
+	r = Tk()
+	r.withdraw()
+	r.clipboard_clear()
+	r.clipboard_append(content)
+	r.destroy()
 
 def has_command(name):
 	return commands.getstatusoutput('which %s' % (name,))[0] == 0

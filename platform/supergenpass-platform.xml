@@ -57,4 +57,15 @@
 			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.1.13.tgz" size="16914"/>
 		</implementation>
 	</group>
+	<group main="sgp-platform">
+		<requires interface="http://repo.roscidus.com/python/python">
+			<version before="3"/>
+		</requires>
+		<command name="run" path="sgp-platform">
+			<runner interface="http://repo.roscidus.com/python/python"/>
+		</command>
+		<requires interface="http://gfxmonk.net/dist/0install/supergenpass.xml"/>
+		<requires interface="http://gfxmonk.net/dist/0install/pynotify.xml" importance="recommended"/>/>
+		<requires interface="http://gfxmonk.net/dist/0install/python-tk.xml" importance="recommended"/>/>
+	</group>
 </interface>
