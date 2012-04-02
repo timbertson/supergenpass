@@ -65,7 +65,11 @@
 			<runner interface="http://repo.roscidus.com/python/python"/>
 		</command>
 		<requires interface="http://gfxmonk.net/dist/0install/supergenpass.xml"/>
-		<requires interface="http://gfxmonk.net/dist/0install/pynotify.xml" importance="recommended"/>/>
-		<requires interface="http://gfxmonk.net/dist/0install/python-tk.xml" importance="recommended"/>/>
+		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/pynotify.xml"/>
+		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/python-tk.xml"/>
+		<implementation id="sha1new=2b05d50ff9779c917dbb5ec331240969870f81e5" released="2012-04-02" version="0.1.14">
+			<manifest-digest sha256="b9ddba121b965ea2265bbdcfbe6f202224625e80fc14298881cd038356241d74"/>
+			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.1.14.tgz" size="16637"/>
+		</implementation>
 	</group>
 </interface>
