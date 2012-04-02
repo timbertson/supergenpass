@@ -127,12 +127,8 @@ class Main(object):
 				persistence.remember(domain_)
 
 def save_clipboard(content):
-	from Tkinter import Tk
-	r = Tk()
-	r.withdraw()
-	r.clipboard_clear()
-	r.clipboard_append(content)
-	r.destroy()
+	import pyperclip
+	pyperclip.copy(content)
 
 def has_command(name):
 	return commands.getstatusoutput('which %s' % (name,))[0] == 0
