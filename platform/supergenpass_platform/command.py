@@ -30,7 +30,6 @@ import persistence
 get_pass = 'get_password'
 guess_url = 'guess_url'
 save_pass = 'save_password'
-save_clip = 'save_clipboard'
 notify = 'notify'
 
 class Main(object):
@@ -117,6 +116,9 @@ class Main(object):
 				save_clipboard(generated_pass)
 				print >> sys.stderr, "  (password saved to the clipboard)"
 			except (StandardError, ImportError):
+				if opts.verbose:
+					import traceback
+					traceback.print_exc()
 				print >> sys.stderr, "could not save clipboard. your password is: %s" % (generated_pass)
 		if opts.notify:
 			self.do(notify, domain_)
