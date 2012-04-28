@@ -20,16 +20,20 @@ from commands import getstatusoutput
 from ..command import require_command
 from .. import keyinfo
 
-def notify(domain):
-	"""
-	Send a system notification that the password has been generated
-	"""
+try:
 	import pynotify
-	pynotify.init("supergenpass")
-	notification = pynotify.Notification("supergenpass",
-		"password generated for %s" % (domain,))
-	notification.set_hint_double('transient', 1)
-	notification.show()
+except ImportError:
+	pass
+else:
+	def notify(domain):
+		"""
+		Send a system notification that the password has been generated
+		"""
+		pynotify.init("supergenpass")
+		notification = pynotify.Notification("supergenpass",
+			"password generated for %s" % (domain,))
+		notification.set_hint_double('transient', 1)
+		notification.show()
 
 def guess_url():
 	import subprocess
