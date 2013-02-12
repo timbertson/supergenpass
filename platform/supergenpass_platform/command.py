@@ -88,6 +88,9 @@ class Main(object):
 		if not url:
 			url = ui.get_input('Enter domain / URL: ')
 
+		domain_ = domain.url_to_domain(url)
+		print "Using Domain: %s" % (domain_,)
+
 		pass_ = None
 		if not opts.ask:
 			try:
@@ -105,7 +108,6 @@ class Main(object):
 				print "Couldn't save password to os store: %s" % (e,)
 				raise
 		
-		domain_ = domain.url_to_domain(url)
 		generated_pass = sgp(pass_, domain_, opts.length)
 		
 		if opts.print_password:
