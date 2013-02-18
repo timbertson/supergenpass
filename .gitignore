@@ -1,9 +1,4 @@
-*.pyc
-.bzr*
 build
 dist
-*.egg-info
-*.tmproj
-*~
-
 0inst
+*-local.xml

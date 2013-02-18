@@ -82,9 +82,27 @@
 		<requires interface="http://gfxmonk.net/dist/0install/supergenpass.xml"/>
 		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/pynotify.xml"/>
 		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/pyperclip.xml"/>
+		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/last-visited-url.xml"/>
 		<implementation id="sha1new=a729da60440ee39cd221a8b12b9523e13ac0413c" released="2012-04-02" version="0.1.15">
 			<manifest-digest sha256="8d90a72d42c80495da0d39eb178f1ca3449f29fb1648216935cefaf009d3ba4c"/>
 			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.1.15.tgz" size="16614"/>
+		</implementation>
+	</group>
+	<group main="sgp-platform">
+		<requires interface="http://repo.roscidus.com/python/python">
+			<version before="3"/>
+		</requires>
+		<command name="run" path="sgp-platform">
+			<runner interface="http://repo.roscidus.com/python/python"/>
+		</command>
+		<requires interface="http://gfxmonk.net/dist/0install/supergenpass.xml"/>
+		<requires interface="http://gfxmonk.net/dist/0install/python-xdg.xml"/>
+		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/pynotify.xml"/>
+		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/pyperclip.xml"/>
+		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/last-visited-url.xml"/>
+		<implementation id="sha1new=0a1cb75f52923872f686511ab37981632aa48549" released="2013-02-18" version="0.2">
+			<manifest-digest sha256="f4960eeae89288d5af8f5f9734f631801100e00fcf058fe72a40b6bf9d07220c"/>
+			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.2.tgz" size="18234"/>
 		</implementation>
 	</group>
 </interface>
