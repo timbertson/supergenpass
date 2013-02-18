@@ -14,51 +14,98 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import print_function
 
 import user
 import os
+from xdg import BaseDirectory
 
-domain_filename = '.supergenpass.domains'
+DEPRECATED_FILENAME = '.supergenpass.domains'
+domain_filename = DEPRECATED_FILENAME
+CONFIG = 'supergenpass'
+DOMAINS = 'domains'
 
-def remember(domain):
-	domains = get_domains()
-	if not domain in domains:
-		domains.append(domain)
-		set_domains(sorted(domains))
+def load():
+	return DomainHints()
 
-def forget(domain):
-	domains = get_domains()
-	if domain in domains:
-		domains.remove(domain)
-		set_domains(sorted(domains))
+class DomainHints(object):
+	def __init__(self):
+		old_path = os.path.join(user.home, DEPRECATED_FILENAME)
+		if os.path.exists(old_path):
+			self.path = old_path
+			print("NOTE: "
+				"~/" + DEPRECATED_FILENAME + " is deprecated. Please move this file to\n"
+				"~/.config/supergenpass/domains to use the new \"hints\" feature\n"
+				"(or delete it if you don't care about its contents)\n")
+			self._save = self._save_deprecated
+			self.dict = self._read_file(self.path)
+		else:
+			self.path = None
+			self.dict = self._read()
+		self._loaded_data = self.dict.copy()
 	
-## implementation ##
+	def list_domains(self):
+		return list(sorted(self.dict.keys()))
+	
+	def remember(self, domain, hint=None):
+		if hint is None and domain in self.dict: return
+		print("remembering hint: %s" % (hint,))
+		self.dict[domain] = hint or None
+	
+	def get_hint(self, domain):
+		return self.dict.get(domain, None)
+	
+	def forget(self, domain):
+		try:
+			del self[domain]
+		except KeyError:pass
+	
+	def _read(self):
+		self._save = self._save_xdg
+		for d in BaseDirectory.load_config_paths(CONFIG):
+			path = os.path.join(d, DOMAINS)
+			if os.path.exists(path):
+				return self._read_file(path)
+		else:
+			return {}
+	
+	def _save_xdg(self):
+		if self.path is None:
+			self.path = self.default_xdg_path
+		new_path = self.path + ".new"
+		with open(new_path, 'w') as f:
+			for key in sorted(self.dict.keys()):
+				pair = (key, self.dict[key])
+				print(self._join(pair), file=f)
+		os.rename(new_path, self.path)
 
-def unique(lst):
-	return list(set(lst))
+	def _save_deprecated(self):
+		with open(self.path, 'w') as f:
+			for dom in self.list_domains():
+				print(dom, file=f)
+	
+	def save(self):
+		if self.dict != self._loaded_data:
+			print("Saving updated domain info...")
+			self._save()
+	
+	def _read_file(self, path):
+		self.path = path
+		with open(path) as inputfile:
+			return dict(map(self._split, inputfile))
+	
+	def _split(self, line):
+		parts = line.strip().split("#", 1)
+		if len(parts) == 1:
+			return (parts[0], None)
+		return tuple(parts)
+	
+	def _join(self, pair):
+		if pair[1] is None:
+			return pair[0]
+		return "#".join(pair)
 
-def read_file_lines(filename):
-	f = open(filename)
-	lines = [line.strip() for line in f.readlines()]
-	lines = filter(lambda s: len(s) > 0, lines)
-	f.close()
-	return unique(lines)
-
-def write_file_lines(filename, lines):
-	f = open(filename, 'w')
-	f.writelines('\n'.join(lines))
-	f.write('\n')
-	f.close()
-
-def get_domain_file():
-	return os.path.join(user.home, domain_filename)
-
-def get_domains():
-	try:
-		return read_file_lines(get_domain_file())
-	except IOError:
-		return []
-
-def set_domains(domains):
-	write_file_lines(get_domain_file(), domains)
+	@property
+	def default_xdg_path(self):
+		os.path.join(BaseDirectory.save_config_path(CONFIG), DOMAINS)
 

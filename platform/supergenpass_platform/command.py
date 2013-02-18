@@ -21,7 +21,8 @@ import sys
 from optparse import OptionParser
 
 # library
-from supergenpass import domain, sgp
+from supergenpass import sgp
+from supergenpass.domain import url_to_domain
 
 # local
 import ui
@@ -57,6 +58,7 @@ class Main(object):
 		parser.add_option('--notify', action='store_true', default=True, help='Notify on completion (default is --notify)')
 		parser.add_option('-q', '--no-notify', dest='notify', action='store_false')
 		parser.add_option('-r', '--remember', action='store_true', default=True, help='remember on completion (default is --remember)')
+		parser.add_option('--hint', help='add a hint for this domain (implies --remember)')
 		parser.add_option('--no-remember', dest='remember', action='store_false')
 		parser.add_option('--forget', action='store_true', default=False, help='forget this domain from ~/.supergenpass.domains (undo a previous --remember)')
 		parser.add_option('--domains', dest='list_domains', action='store_true', default=False, help='list all remembered domains')
@@ -71,8 +73,9 @@ class Main(object):
 		else:
 			url = args[0] if args else None
 
+		store = persistence.load()
 		if opts.list_domains:
-			print '\n'.join(persistence.get_domains())
+			print '\n'.join(store.list_domains())
 			return
 
 		if opts.save:
@@ -88,8 +91,11 @@ class Main(object):
 		if not url:
 			url = ui.get_input('Enter domain / URL: ')
 
-		domain_ = domain.url_to_domain(url)
-		print "Using Domain: %s" % (domain_,)
+		domain = url_to_domain(url)
+		print "Using Domain: %s" % (domain,)
+		current_hint = store.get_hint(domain)
+		if current_hint:
+			print("(Hint: %s)" % (current_hint,))
 
 		pass_ = None
 		if not opts.ask:
@@ -108,12 +114,12 @@ class Main(object):
 				print "Couldn't save password to os store: %s" % (e,)
 				raise
 		
-		generated_pass = sgp(pass_, domain_, opts.length)
+		generated_pass = sgp(pass_, domain, opts.length)
 		
 		if opts.print_password:
 			print generated_pass
 		else:
-			print >> sys.stderr, "Generated password of length %s for '%s'" % (opts.length, domain_)
+			print >> sys.stderr, "Generated password of length %s for '%s'" % (opts.length, domain)
 			try:
 				save_clipboard(generated_pass)
 				print >> sys.stderr, "  (password saved to the clipboard)"
@@ -123,12 +129,15 @@ class Main(object):
 					traceback.print_exc()
 				print >> sys.stderr, "could not save clipboard. your password is: %s" % (generated_pass)
 		if opts.notify:
-			self.do(notify, domain_)
+			self.do(notify, domain)
 		if opts.forget:
-			persistence.forget(domain_)
+			store.forget(domain)
 		else:
+			if opts.hint is not None:
+				store.remember(domain, opts.hint)
 			if opts.remember:
-				persistence.remember(domain_)
+				store.remember(domain)
+		store.save()
 
 def save_clipboard(content):
 	import pyperclip
