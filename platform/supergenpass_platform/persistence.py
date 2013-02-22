@@ -49,7 +49,8 @@ class DomainHints(object):
 	
 	def remember(self, domain, hint=None):
 		if hint is None and domain in self.dict: return
-		print("remembering hint: %s" % (hint,))
+		if hint is not None:
+			print("remembering hint: %s" % (hint,))
 		self.dict[domain] = hint or None
 	
 	def get_hint(self, domain):
