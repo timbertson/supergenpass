@@ -14,6 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import print_function
 
 #std
 import commands
@@ -33,6 +34,9 @@ guess_url = 'guess_url'
 save_pass = 'save_password'
 notify = 'notify'
 
+def info(s):
+	print(s, file=sys.stderr)
+
 class Main(object):
 	def __init__(self, os_integration_provider):
 		self.os_integration = os_integration_provider
@@ -44,7 +48,7 @@ class Main(object):
 	def do(self, action, *args, **kwargs):
 		if not self.can_do(action):
 			if self.opts.verbose:
-				print >> sys.stderr, "Warning: os integration %s doesn't support function %s" % (getattr(self.os_integration, '__name__', '(none)'), action)
+				info("Warning: os integration %s doesn't support function %s" % (getattr(self.os_integration, '__name__', '(none)'), action))
 			return False
 		return getattr(self.os_integration, action)(*args, **kwargs)
 	
@@ -75,7 +79,7 @@ class Main(object):
 
 		store = persistence.load()
 		if opts.list_domains:
-			print '\n'.join(store.list_domains())
+			print('\n'.join(store.list_domains()))
 			return
 
 		if opts.save:
@@ -83,7 +87,7 @@ class Main(object):
 
 		if opts.print_password is None and not sys.stdout.isatty():
 			if opts.verbose:
-				print >> sys.stderr, "sgp: assuming --print since stdout is not a TTY"
+				info("sgp: assuming --print since stdout is not a TTY")
 			opts.print_password = True
 
 		if not url:
@@ -92,10 +96,10 @@ class Main(object):
 			url = ui.get_input('Enter domain / URL: ')
 
 		domain = url_to_domain(url)
-		print "Using Domain: %s" % (domain,)
+		info("Using Domain: %s" % (domain,))
 		current_hint = store.get_hint(domain)
 		if current_hint:
-			print("(Hint: %s)" % (current_hint,))
+			info("(Hint: %s)" % (current_hint,))
 
 		pass_ = None
 		if not opts.ask:
@@ -111,23 +115,23 @@ class Main(object):
 				if done is False:
 					raise RuntimeError, "not supported by os integration module"
 			except (StandardError), e:
-				print "Couldn't save password to os store: %s" % (e,)
+				info("Couldn't save password to os store: %s" % (e,))
 				raise
 		
 		generated_pass = sgp(pass_, domain, opts.length)
 		
 		if opts.print_password:
-			print generated_pass
+			print(generated_pass)
 		else:
-			print >> sys.stderr, "Generated password of length %s for '%s'" % (opts.length, domain)
+			info("Generated password of length %s for '%s'" % (opts.length, domain))
 			try:
 				save_clipboard(generated_pass)
-				print >> sys.stderr, "  (password saved to the clipboard)"
+				info("  (password saved to the clipboard)")
 			except (StandardError, ImportError):
 				if opts.verbose:
 					import traceback
 					traceback.print_exc()
-				print >> sys.stderr, "could not save clipboard. your password is: %s" % (generated_pass)
+				info("could not save clipboard. your password is: %s" % (generated_pass))
 		if opts.notify:
 			self.do(notify, domain)
 		if opts.forget:
