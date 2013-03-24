@@ -104,5 +104,9 @@
 			<manifest-digest sha256="f4960eeae89288d5af8f5f9734f631801100e00fcf058fe72a40b6bf9d07220c"/>
 			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.2.tgz" size="18234"/>
 		</implementation>
+		<implementation id="sha1new=961ebf345775f44755354dc7767e16d3a88812cb" released="2013-03-24" version="0.2.1">
+			<manifest-digest sha256new="HUTI5EVIFV5WEJE2S7JYHTIHV7BRZTWQXOLTLQDTCED7DT6YY4TA"/>
+			<archive href="http://gfxmonk.net/dist/0install/supergenpass-platform/supergenpass-platform-0.2.1.tgz" size="18235"/>
+		</implementation>
 	</group>
 </interface>
