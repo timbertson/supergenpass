@@ -29,9 +29,7 @@ from supergenpass.domain import url_to_domain
 import ui
 import persistence
 
-get_pass = 'get_password'
 guess_url = 'guess_url'
-save_pass = 'save_password'
 notify = 'notify'
 
 def info(s):
@@ -55,10 +53,10 @@ class Main(object):
 	def run(self):
 		parser = OptionParser("%prog [options] [url_or_domain]")
 		parser.add_option('-l', '--length', type='int', default=10, help='length of generated password (%default)')
-		parser.add_option('--ask', action='store_true', default=False, help='Ask for the password, skipping system store (default is --no-ask)')
-		parser.add_option('--no-ask', dest='ask', action='store_false')
-		parser.add_option('--save', action='store_true', default=False, help='Save password (in system store, default is --no-save)')
-		parser.add_option('--no-save', dest='save', action='store_false')
+		parser.add_option('--ask', action='store_true', default=False, help='(ignored)')
+		parser.add_option('--no-ask', dest='ask', action='store_false', help='(ignored)')
+		parser.add_option('--save', action='store_true', default=False, help='(ignored)')
+		parser.add_option('--no-save', dest='save', action='store_false', help='(ignored)')
 		parser.add_option('--notify', action='store_true', default=True, help='Notify on completion (default is --notify)')
 		parser.add_option('-q', '--no-notify', dest='notify', action='store_false')
 		parser.add_option('-r', '--remember', action='store_true', default=True, help='remember on completion (default is --remember)')
@@ -82,9 +80,6 @@ class Main(object):
 			print('\n'.join(store.list_domains()))
 			return
 
-		if opts.save:
-			opts.ask = True
-
 		if opts.print_password is None and not sys.stdout.isatty():
 			if opts.verbose:
 				info("sgp: assuming --print since stdout is not a TTY")
@@ -101,23 +96,8 @@ class Main(object):
 		if current_hint:
 			info("(Hint: %s)" % (current_hint,))
 
-		pass_ = None
-		if not opts.ask:
-			try:
-				pass_ = self.do(get_pass)
-			except (StandardError): pass
-		if not pass_:
-			pass_ = ui.get_password('Enter master password: ')
+		pass_ = ui.get_password('Enter master password: ')
 
-		if opts.save:
-			try:
-				done = self.do(save_pass, pass_)
-				if done is False:
-					raise RuntimeError, "not supported by os integration module"
-			except (StandardError), e:
-				info("Couldn't save password to os store: %s" % (e,))
-				raise
-		
 		generated_pass = sgp(pass_, domain, opts.length)
 		
 		if opts.print_password:

@@ -97,6 +97,7 @@
 		</command>
 		<requires interface="http://gfxmonk.net/dist/0install/supergenpass.xml"/>
 		<requires interface="http://gfxmonk.net/dist/0install/python-xdg.xml"/>
+		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/osx-terminal-notifier.xml"/>
 		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/pynotify.xml"/>
 		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/pyperclip.xml"/>
 		<requires importance="recommended" interface="http://gfxmonk.net/dist/0install/last-visited-url.xml"/>

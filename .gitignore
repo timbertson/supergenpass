@@ -2,3 +2,4 @@ build
 dist
 0inst
 *-local.xml
+*.pyc

@@ -108,5 +108,5 @@ class DomainHints(object):
 
 	@property
 	def default_xdg_path(self):
-		os.path.join(BaseDirectory.save_config_path(CONFIG), DOMAINS)
+		return os.path.join(BaseDirectory.save_config_path(CONFIG), DOMAINS)
 

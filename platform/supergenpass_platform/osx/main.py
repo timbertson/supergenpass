@@ -15,39 +15,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
+import os, sys
 from commands import getstatusoutput
-from keychain import Keychain, KeychainError
 from .. import keyinfo
 from ..command import require_command
 
-
-__all__ = ['get_password','notify','guess_url']
-
-# contract with the main module
-# get_password: get the password from the password storage
-#    ask the user for it if it cannot be found, or if ask = True
-def get_password():
-	try:
-		return _store().password()
-	except KeychainError:
-		print >> sys.stderr, "Couldn't get keychain password"
-		raise
-	
-def save_password(p):
-	"""
-	save password to keychain
-	"""
-	_store().save_password(p)
 
 def notify(domain):
 	"""
 	Send a system notification that the password has been generated
 	"""
-	require_command('growlnotify', url='http://growl.info/documentation/growlnotify.php')
-	st, output = getstatusoutput("growlnotify -m '%s - password generated' -t 'SuperGenPass'" % domain)
+	st, output = getstatusoutput("terminal-notifier -group net.gfxmonk.supergenpass -message '%s - password generated' -title 'SuperGenPass'" % domain)
 	if st:
-		raise RuntimeError, output
+		print >> sys.stderr, "(Couldn't show notification)"
 
 def guess_url():
 	"""
@@ -90,45 +70,3 @@ def guess_url():
 		# print output
 		return output
 
-# implementation details for keychain access
-
-_store_var = None
-def _store():
-	global _store_var
-	if _store_var == None:
-		_store_var = PasswordStore()
-	return _store_var
-
-def _ask_password():
-	from getpass import getpass
-	password = getpass("Enter master password: ")
-	return password
-
-
-class PasswordStore():
-	def __init__(self, chain='login', account=None, service=None):
-		if account is None:
-			account = keyinfo.account
-		if service is None:
-			service = keyinfo.realm
-		self.chain = chain
-		self.account = account
-		self.service = service
-		self.keychain = Keychain()
-
-	def unlock(self):
-		self.keychain.unlockkeychain(self.chain)
-	
-	def lock(self):
-		self.keychain.lockkeychain(chain)
-		
-	def password(self, account = None):
-		if account is None:
-			account = self.account
-		_, password = self.keychain.getgenericpassword(self.chain, account, self.service)
-		return password
-
-	def save_password(self, password, account = None):
-		if account is None:
-			account = keyinfo.account
-		self.keychain.setgenericpassword(self.chain, account, password, self.service)
