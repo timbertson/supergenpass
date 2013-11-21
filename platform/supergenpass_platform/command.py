@@ -62,7 +62,7 @@ class Main(object):
 		parser.add_option('-r', '--remember', action='store_true', default=True, help='remember on completion (default is --remember)')
 		parser.add_option('--hint', help='add a hint for this domain (implies --remember)')
 		parser.add_option('--no-remember', dest='remember', action='store_false')
-		parser.add_option('--forget', action='store_true', default=False, help='forget this domain from ~/.supergenpass.domains (undo a previous --remember)')
+		parser.add_option('--forget', action='store_true', default=False, help='forget this domain from ~/.config/supergenpass/domains (undo a previous --remember)')
 		parser.add_option('--domains', dest='list_domains', action='store_true', default=False, help='list all remembered domains')
 		parser.add_option('-v', '--verbose', dest='verbose', action='store_true', default=False, help='more information')
 		parser.add_option('-p', '--print', dest='print_password', action='store_true', default=None, help='just print generated password')
@@ -80,11 +80,6 @@ class Main(object):
 			print('\n'.join(store.list_domains()))
 			return
 
-		if opts.print_password is None and not sys.stdout.isatty():
-			if opts.verbose:
-				info("sgp: assuming --print since stdout is not a TTY")
-			opts.print_password = True
-
 		if not url:
 			url = self.do(guess_url)
 		if not url:
@@ -92,33 +87,39 @@ class Main(object):
 
 		domain = url_to_domain(url)
 		info("Using Domain: %s" % (domain,))
-		current_hint = store.get_hint(domain)
-		if current_hint:
-			info("(Hint: %s)" % (current_hint,))
 
-		pass_ = ui.get_password('Enter master password: ')
-
-		generated_pass = sgp(pass_, domain, opts.length)
-		
-		if opts.print_password:
-			print(generated_pass)
-		else:
-			info("Generated password of length %s for '%s'" % (opts.length, domain))
-			try:
-				save_clipboard(generated_pass)
-				info("  (password saved to the clipboard)")
-			except (StandardError, ImportError):
-				if opts.verbose:
-					import traceback
-					traceback.print_exc()
-				info("could not save clipboard. your password is: %s" % (generated_pass))
-		if opts.notify:
-			self.do(notify, domain)
 		if opts.forget:
 			store.forget(domain)
+		elif opts.hint is not None:
+			store.remember(domain, opts.hint)
 		else:
-			if opts.hint is not None:
-				store.remember(domain, opts.hint)
+			if opts.print_password is None and not sys.stdout.isatty():
+				if opts.verbose:
+					info("sgp: assuming --print since stdout is not a TTY")
+				opts.print_password = True
+
+			current_hint = store.get_hint(domain)
+			if current_hint:
+				info("(Hint: %s)" % (current_hint,))
+
+			pass_ = ui.get_password('Enter master password: ')
+
+			generated_pass = sgp(pass_, domain, opts.length)
+			
+			if opts.print_password:
+				print(generated_pass)
+			else:
+				info("Generated password of length %s for '%s'" % (opts.length, domain))
+				try:
+					save_clipboard(generated_pass)
+					info("  (password saved to the clipboard)")
+				except (StandardError, ImportError):
+					if opts.verbose:
+						import traceback
+						traceback.print_exc()
+					info("could not save clipboard. your password is: %s" % (generated_pass))
+			if opts.notify:
+				self.do(notify, domain)
 			if opts.remember:
 				store.remember(domain)
 		store.save()

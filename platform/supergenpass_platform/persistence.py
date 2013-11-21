@@ -58,7 +58,7 @@ class DomainHints(object):
 	
 	def forget(self, domain):
 		try:
-			del self[domain]
+			del self.dict[domain]
 		except KeyError:pass
 	
 	def _read(self):
